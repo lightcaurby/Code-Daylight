@@ -1,0 +1,67 @@
+import( "modules" )
+
+# Read modules.
+lib.io <- suppressPackageStartupMessages( modules::use( here( "src/io" ) ) )
+lib.transform <- suppressPackageStartupMessages( modules::use( here( "src/transforms" ) ) )
+lib.plots <- suppressPackageStartupMessages( modules::use( here( "src/plots" ) ) )
+
+export(	"run" )
+
+# Full workflow.
+run <- function(..., .debugmod=FALSE)
+{
+	# Read input data.
+	cat( sprintf( "Reading daylight info\n" ) )
+	daylight_info <- lib.io$input_daylight_info$run( .debugmod=.debugmod )
+	cat( sprintf( "Reading replacement data\n" ) )
+	replacements <- lib.io$input_replacements$run( .debugmod=.debugmod )
+	cat( sprintf( "Reading batch data\n" ) )
+	batches <- lib.io$input_batches$run( .debugmod=.debugmod )
+	
+	# Transform the input data.
+	cat( sprintf( "Wrangling daylight info\n" ) )
+	daylight_info <- lib.transform$wrangle_daylight_info$run( daylight_info, .debugmod=.debugmod )
+	cat( sprintf( "Wrangling replacements data\n" ) )
+	replacements <- lib.transform$wrangle_replacements$run( replacements, batches, daylight_info, .debugmod=.debugmod )
+	cat( sprintf( "Preparing plotting data\n" ) )
+	plotting_data <-  lib.transform$prepare_replacements_for_plotting$run( replacements, .debugmod=.debugmod )
+	
+	# Plot names.
+	plot_src <- c(
+		"valot_asennus_tunnit",
+		"valot_asennus_vuodet",
+		"valot_erä_tunnit",
+		"valot_erä_vuodet",
+		"valot_jakaumat_asennus_tunnit",
+		"valot_jakaumat_asennus_vuodet",
+		"valot_jakaumat_erä_tunnit",
+		"valot_jakaumat_erä_vuodet",
+		"valot_jakauma_tunnit",
+		"valot_jakauma_vuodet",
+		"valot_sijainti_päivät",
+		"valot_sijainti_tunnit",
+		"valot_sijainti_vuodet",
+		"valot_density_erä_tunnit"
+	)
+	
+	# Generate plots.
+	cat( sprintf( "Generating plots\n" ) )
+	plotting_data$plots <- lapply( plot_src, function( p ) {
+			list( 
+					name = p,
+					plot = lib.plots[[ paste0( "plot_", p ) ]]$run( plotting_data, .debugmod=.debugmod )
+			)
+		} )
+
+		
+	# Output plots as PDFs.
+	cat( sprintf( "Generating PDF from each plot\n" ) )
+	lib.plots$plot_all_pdf$run( plotting_data, 4, 8 )
+
+	# Complete workflow.	
+	cat( sprintf( "Workflow complete\n" ) )
+	invisible(plotting_data)
+}
+
+
+
