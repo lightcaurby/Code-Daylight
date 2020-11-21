@@ -1,3 +1,4 @@
+# Helper method for package installation.
 EnsurePackage<-function(x)
 {
 	x <- as.character(x)
@@ -8,6 +9,12 @@ EnsurePackage<-function(x)
 	}
 }
 
+# Checkpoint.
+EnsurePackage( "checkpoint" )
+checkpoint( "2020-10-01" )
+
+# Packages.
+EnsurePackage( "here" )
 EnsurePackage( "modules" )
 EnsurePackage( "tidyverse" )
 EnsurePackage( "readr" )
@@ -22,3 +29,4 @@ EnsurePackage( "gridExtra" )
 EnsurePackage( "cowplot" )
 EnsurePackage( "egg" )
 EnsurePackage( "rstatix" )
+

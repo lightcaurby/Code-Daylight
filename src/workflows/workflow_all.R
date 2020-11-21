@@ -4,6 +4,7 @@ import( "modules" )
 lib.io <- suppressPackageStartupMessages( modules::use( here( "src/io" ) ) )
 lib.transform <- suppressPackageStartupMessages( modules::use( here( "src/transforms" ) ) )
 lib.plots <- suppressPackageStartupMessages( modules::use( here( "src/plots" ) ) )
+lib.models <- suppressPackageStartupMessages( modules::use( here( "src/models" ) ) )
 
 export(	"run" )
 
@@ -53,11 +54,14 @@ run <- function(..., .debugmod=FALSE)
 			)
 		} )
 
-		
 	# Output plots as PDFs.
 	cat( sprintf( "Generating PDF from each plot\n" ) )
 	lib.plots$plot_all_pdf$run( plotting_data, 4, 8 )
 
+	# Run the modeling.
+	cat( sprintf( "Running the models\n" ) )
+	lib.models$model_run_all$run( plotting_data )
+	
 	# Complete workflow.	
 	cat( sprintf( "Workflow complete\n" ) )
 	invisible(plotting_data)
