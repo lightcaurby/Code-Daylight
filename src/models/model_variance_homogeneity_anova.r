@@ -8,14 +8,15 @@ import( "rstatix" )
 export( "run" )
 
 # Homogeneity of variances.
-run <- function( input, ..., .debugmod=FALSE )
+run <- function( input, ... )
 {
-	if( .debugmod) browser();
+	# Debugger hook.
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 	
 	# Anova test to check the homogeneity of variances.
 	t <- input$replacements %>%
-		dplyr::filter(Vaihdettu & Erä %in% input$batches.multi$Erä) %>%
-		anova_test(PimeätTunnit ~ Erä)
+		dplyr::filter( Vaihdettu & Erä %in% input$batches.multi$Erä ) %>%
+		anova_test( PimeätTunnit ~ Erä )
 
 	print( t )
 }

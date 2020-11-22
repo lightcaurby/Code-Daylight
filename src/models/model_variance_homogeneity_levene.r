@@ -8,9 +8,10 @@ import( "rstatix" )
 export( "run" )
 
 # Homogeneity of variances.
-run <- function( input, model, ..., .debugmod=FALSE )
+run <- function( input, model, ... )
 {
-	if( .debugmod ) browser();
+	# Debugger hook.
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 	
 	# Levene's test to check the homogeneity of variances.
 	# With p>0.05, there is not significant difference between variances across groups, therefore

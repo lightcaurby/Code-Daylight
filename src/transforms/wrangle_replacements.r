@@ -7,9 +7,10 @@ import( "lubridate" )
 export( "run" )
 
 # Transform replacements.
-run <- function( replacements, batches, daylight_info, ..., .debugmod=FALSE )
+run <- function( replacements, batches, daylight_info, ... )
 {
-	if( .debugmod) browser();
+	# Debugger hook.
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 	# Combine the replacements and the batches.
 	output <- replacements %>% 

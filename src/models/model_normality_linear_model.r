@@ -8,9 +8,10 @@ import( "rstatix" )
 export( "run" )
 
 # Linear model for normality tests.
-run <- function( input, ..., .debugmod=FALSE )
+run <- function( input, ... )
 {
-	if( .debugmod ) browser();
+	# Debugger hook.
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 	# Build the linear model.
 	data <- input$replacements %>%

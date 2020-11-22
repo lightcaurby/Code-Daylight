@@ -9,23 +9,26 @@ lib.models <- suppressPackageStartupMessages( modules::use( here( "src/models" )
 export(	"run" )
 
 # Full workflow.
-run <- function(..., .debugmod=FALSE)
+run <- function( ... )
 {
+	# Debugger hook.
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+
 	# Read input data.
 	cat( sprintf( "Reading daylight info\n" ) )
-	daylight_info <- lib.io$input_daylight_info$run( .debugmod=.debugmod )
+	daylight_info <- lib.io$input_daylight_info$run()
 	cat( sprintf( "Reading replacement data\n" ) )
-	replacements <- lib.io$input_replacements$run( .debugmod=.debugmod )
+	replacements <- lib.io$input_replacements$run()
 	cat( sprintf( "Reading batch data\n" ) )
-	batches <- lib.io$input_batches$run( .debugmod=.debugmod )
+	batches <- lib.io$input_batches$run()
 	
 	# Transform the input data.
 	cat( sprintf( "Wrangling daylight info\n" ) )
-	daylight_info <- lib.transform$wrangle_daylight_info$run( daylight_info, .debugmod=.debugmod )
+	daylight_info <- lib.transform$wrangle_daylight_info$run( daylight_info)
 	cat( sprintf( "Wrangling replacements data\n" ) )
-	replacements <- lib.transform$wrangle_replacements$run( replacements, batches, daylight_info, .debugmod=.debugmod )
+	replacements <- lib.transform$wrangle_replacements$run( replacements, batches, daylight_info )
 	cat( sprintf( "Preparing plotting data\n" ) )
-	plotting_data <-  lib.transform$prepare_replacements_for_plotting$run( replacements, .debugmod=.debugmod )
+	plotting_data <-  lib.transform$prepare_replacements_for_plotting$run( replacements )
 	
 	# Plot names.
 	plot_src <- c(
@@ -50,7 +53,7 @@ run <- function(..., .debugmod=FALSE)
 	plotting_data$plots <- lapply( plot_src, function( p ) {
 			list( 
 					name = p,
-					plot = lib.plots[[ paste0( "plot_", p ) ]]$run( plotting_data, .debugmod=.debugmod )
+					plot = lib.plots[[ paste0( "plot_", p ) ]]$run( plotting_data, .debug=.debug )
 			)
 		} )
 

@@ -29,4 +29,5 @@ EnsurePackage( "gridExtra" )
 EnsurePackage( "cowplot" )
 EnsurePackage( "egg" )
 EnsurePackage( "rstatix" )
+EnsurePackage( "utils" )
 

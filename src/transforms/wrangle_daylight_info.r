@@ -6,9 +6,10 @@ import( "dplyr" )
 export( "run" )
 
 # Transform daylight info.
-run <- function( input, ..., .debugmod=FALSE )
+run <- function( input, ... )
 {
-	if( .debugmod) browser();
+	# Debugger hook.
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 		# Calculate daylight seconds.
 	input <- input %>%

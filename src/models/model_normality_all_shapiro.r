@@ -10,9 +10,10 @@ export( "run" )
 # Normality test with an overall Shapiro-Wilk test.
 # - In the QQ plot, if all the points fall approximately along the reference line, we can assume normality.
 # - By the overall Shapiro-Wilk test, if the p-value is not significant (p > 0.05), we can assume normality.
-run <- function( input, model, ..., .debugmod=FALSE )
+run <- function( input, model, ... )
 {
-	if( .debugmod ) browser();
+	# Debugger hook.
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 	# Create a QQ plot of residuals.
 	p <- ggqqplot( residuals( model ) )

@@ -1,4 +1,3 @@
-options(conflicts.policy = list(error = TRUE, warn = FALSE))
 import( "here" )
 import( "modules" )
 import( "ggplot2" )
@@ -7,9 +6,10 @@ import( "dplyr" )
 export( "run" )
 
 # Create a plot.
-run <- function( data.plot, ..., .debugmod=FALSE )
+run <- function( data.plot, ... )
 {
-	if( .debugmod) browser();
+	# Debugger hook.
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 	# Plot.
 	ggplot() +

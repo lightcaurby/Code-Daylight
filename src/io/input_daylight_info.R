@@ -5,7 +5,7 @@ import( "readr" )
 export( "run" )
 
 # Read daylight info,
-run <- function(..., .debugmod=FALSE)
+run <- function(...)
 {
 	# Read the tabular data.
 	read_fwf(
