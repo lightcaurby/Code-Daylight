@@ -7,7 +7,7 @@ import( "rstatix" )
 export( "run" )
 
 # Extreme outliers?
-run <- function( input, ... )
+run <- function( input, models, ... )
 {
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
@@ -19,6 +19,12 @@ run <- function( input, ... )
 		identify_outliers( PimeätTunnit ) %>%
 		select( Erä, Huoneisto, Pvm, PvmSeur, PimeätTunnit, is.outlier, is.extreme )
 
-	print( t )
+	# Construct the result.
+	result <- list(
+		model = NULL,
+		table = t,
+		plot = NULL
+	)
+	result
 }
 

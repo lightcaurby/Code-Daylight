@@ -18,6 +18,12 @@ run <- function( input, ... )
 		dplyr::filter( Vaihdettu & Erä %in% input$batches.multi$Erä )
 	model  <- lm( PimeätTunnit ~ Erä, data = data )
 
-	model
+	# Construct the result.
+	result <- list(
+		model = model,
+		table = NULL,
+		plot = NULL
+	)
+	result
 }
 

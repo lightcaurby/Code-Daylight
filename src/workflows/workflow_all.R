@@ -21,7 +21,7 @@ run <- function( ... )
 	replacements <- lib.io$input_replacements$run()
 	cat( sprintf( "Reading batch data\n" ) )
 	batches <- lib.io$input_batches$run()
-	
+
 	# Transform the input data.
 	cat( sprintf( "Wrangling daylight info\n" ) )
 	daylight_info <- lib.transform$wrangle_daylight_info$run( daylight_info)
@@ -29,43 +29,20 @@ run <- function( ... )
 	replacements <- lib.transform$wrangle_replacements$run( replacements, batches, daylight_info )
 	cat( sprintf( "Preparing plotting data\n" ) )
 	plotting_data <-  lib.transform$prepare_replacements_for_plotting$run( replacements )
-	
-	# Plot names.
-	plot_src <- c(
-		"valot_asennus_tunnit",
-		"valot_asennus_vuodet",
-		"valot_erä_tunnit",
-		"valot_erä_vuodet",
-		"valot_jakaumat_asennus_tunnit",
-		"valot_jakaumat_asennus_vuodet",
-		"valot_jakaumat_erä_tunnit",
-		"valot_jakaumat_erä_vuodet",
-		"valot_jakauma_tunnit",
-		"valot_jakauma_vuodet",
-		"valot_sijainti_päivät",
-		"valot_sijainti_tunnit",
-		"valot_sijainti_vuodet",
-		"valot_density_erä_tunnit"
-	)
-	
+
 	# Generate plots.
 	cat( sprintf( "Generating plots\n" ) )
-	plotting_data$plots <- lapply( plot_src, function( p ) {
-			list( 
-					name = p,
-					plot = lib.plots[[ paste0( "plot_", p ) ]]$run( plotting_data, .debug=.debug )
-			)
-		} )
+	plotting_data$plots <- lib.plots$plot_run_all$run( plotting_data )
 
 	# Output plots as PDFs.
 	cat( sprintf( "Generating PDF from each plot\n" ) )
-	lib.plots$plot_all_pdf$run( plotting_data, 4, 8 )
+	lib.plots$plot_pdf_all$run( plotting_data, 4, 8 )
 
 	# Run the modeling.
 	cat( sprintf( "Running the models\n" ) )
-	lib.models$model_run_all$run( plotting_data )
-	
-	# Complete workflow.	
+	plotting_data$models <- lib.models$model_run_all$run( plotting_data )
+
+	# Complete workflow.
 	cat( sprintf( "Workflow complete\n" ) )
 	invisible(plotting_data)
 }

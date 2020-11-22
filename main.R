@@ -12,4 +12,3 @@ options( "lightcaurby.Code-Daylight" = list(
 lib <- suppressPackageStartupMessages( modules::use( here("src/workflows") ) )
 plotting_data <- lib$workflow_all$run()
 
-

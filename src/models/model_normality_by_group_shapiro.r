@@ -10,7 +10,7 @@ export( "run" )
 # Normality test with a group-wise Shapiro-Wilk test.
 # - In the QQ plot, if all the points fall approximately along the reference line, we can assume normality.
 # - In the group-wise Shapiro-Wilk test, if the scores are normally distributed (p > 0.05) for each group, we can assume normality.
-run <- function( input, model, ... )
+run <- function( input, models, ... )
 {
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
@@ -24,8 +24,13 @@ run <- function( input, model, ... )
 		group_by( Erä ) %>%
 		shapiro_test( PimeätTunnit )
 
-	print( p )
-	print( t )
+	# Construct the result.
+	result <- list(
+		model = NULL,
+		table = t,
+		plot = p
+	)
+	result
 	
 }
 

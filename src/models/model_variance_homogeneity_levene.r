@@ -8,7 +8,7 @@ import( "rstatix" )
 export( "run" )
 
 # Homogeneity of variances.
-run <- function( input, model, ... )
+run <- function( input, models, ... )
 {
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
@@ -20,5 +20,11 @@ run <- function( input, model, ... )
 		dplyr::filter( Vaihdettu & Erä %in% input$batches.multi$Erä ) %>%
 		levene_test( PimeätTunnit ~ Erä )
 
-	print( t )
+	# Construct the result.
+	result <- list(
+		model = NULL,
+		table = t,
+		plot = NULL
+	)
+	result
 }
