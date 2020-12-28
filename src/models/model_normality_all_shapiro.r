@@ -25,7 +25,7 @@ run <- function( input, models, ... )
 	result <- list(
 		model = NULL,
 		table = t,
-		plot = NULL
+		plot = p
 	)
 	result
 }

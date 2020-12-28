@@ -11,12 +11,15 @@ EnsurePackage<-function(x)
 
 # Checkpoint.
 EnsurePackage( "checkpoint" )
-checkpoint( "2020-10-01" )
+checkpoint( "2020-11-30" )
 
 # Packages.
 EnsurePackage( "here" )
 EnsurePackage( "modules" )
 EnsurePackage( "tidyverse" )
+EnsurePackage( "broom" )
+EnsurePackage( "tidyr" )
+EnsurePackage( "purrr" )
 EnsurePackage( "readr" )
 EnsurePackage( "stringr" )
 EnsurePackage( "lubridate" )

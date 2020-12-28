@@ -2,6 +2,7 @@ import( "here" )
 import( "modules" )
 import( "stats" )
 import( "dplyr" )
+import( "broom" )
 import( "stats" )
 import( "rstatix" )
 
@@ -13,11 +14,12 @@ run <- function( input, models, ... )
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 	
-	# Pairwise T test to check the homogeneity of variances.
+	# Kruskal-Wallis test to compare the means.
 	t <- input$replacements %>%
 		dplyr::filter( Vaihdettu & Erä %in% input$batches.multi$Erä ) %>%
-		pairwise_t_test( PimeätTunnit ~ Erä, p.adjust.method = "bonferroni" )
-
+		kruskal.test( PimeätTunnit ~ Erä, data = . ) %>%
+		tidy()
+	
 	# Construct the result.
 	result <- list(
 		model = NULL,

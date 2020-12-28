@@ -1,16 +1,16 @@
 import( "modules" )
 
-# Read modules.
-lib.io <- suppressPackageStartupMessages( modules::use( here( "src/io" ) ) )
-lib.transform <- suppressPackageStartupMessages( modules::use( here( "src/transforms" ) ) )
-lib.plots <- suppressPackageStartupMessages( modules::use( here( "src/plots" ) ) )
-lib.models <- suppressPackageStartupMessages( modules::use( here( "src/models" ) ) )
-
 export(	"run" )
 
 # Full workflow.
 run <- function( ... )
 {
+	# Read modules.
+	lib.io <- suppressPackageStartupMessages( modules::use( here( "src/io" ) ) )
+	lib.transform <- suppressPackageStartupMessages( modules::use( here( "src/transforms" ) ) )
+	lib.plots <- suppressPackageStartupMessages( modules::use( here( "src/plots" ) ) )
+	lib.models <- suppressPackageStartupMessages( modules::use( here( "src/models" ) ) )
+	
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 

@@ -2,6 +2,7 @@ import( "here" )
 import( "modules" )
 import( "stats" )
 import( "dplyr" )
+import( "broom" )
 import( "stats" )
 import( "rstatix" )
 
@@ -15,13 +16,16 @@ run <- function( input, models, ... )
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 	
+	# Table of the model.
+	t <- tidy( models[[ "normality_linear_model" ]]$output$model )
+	
 	# Plot the residuals.
 	p <- plot( models[[ "normality_linear_model" ]]$output$model, 1 )
 	
 	# Construct the result.
 	result <- list(
 		model = NULL,
-		table = NULL,
+		table = t,
 		plot = p
 	)
 	result

@@ -38,8 +38,10 @@ run <- function( input, ... )
 		"normality_by_group_shapiro",
 		"variance_homogeneity_residuals",
 		"variance_homogeneity_levene",
-		"variance_homogeneity_pairwise_t",
-		"variance_homogeneity_anova"
+		"variance_homogeneity_fligner_killeen",
+		"variance_homogeneity_bartlett",
+		"compare_means_kruskal_wallis",
+		"compare_means_anova"
 	)
 	
 	# Generate phase 2 models.

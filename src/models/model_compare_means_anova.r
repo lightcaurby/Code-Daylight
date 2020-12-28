@@ -2,6 +2,8 @@ import( "here" )
 import( "modules" )
 import( "stats" )
 import( "dplyr" )
+import( "broom" )
+import( "ggpubr" )
 import( "stats" )
 import( "rstatix" )
 
@@ -16,13 +18,17 @@ run <- function( input, models, ... )
 	# Anova test to check the homogeneity of variances.
 	t <- input$replacements %>%
 		dplyr::filter( Vaihdettu & Erä %in% input$batches.multi$Erä ) %>%
-		anova_test( PimeätTunnit ~ Erä )
+		aov( PimeätTunnit ~ Erä, data = . ) 
+
+
+	# Create a QQ plot of residuals.
+	p <- ggqqplot( residuals( t ) )
 
 	# Construct the result.
 	result <- list(
-		model = NULL,
-		table = t,
-		plot = NULL
+		model = t,
+		table = tidy( TukeyHSD( t ) ),
+		plot = p
 	)
 	result
 }
