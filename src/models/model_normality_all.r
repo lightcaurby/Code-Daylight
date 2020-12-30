@@ -1,6 +1,7 @@
 import( "here" )
 import( "modules" )
 import( "dplyr" )
+import( "ggplot2" )
 import( "ggpubr" )
 import( "stats" )
 import( "rstatix" )
@@ -16,7 +17,11 @@ run <- function( input, models, ... )
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 	# Create a QQ plot of residuals.
-	p <- ggqqplot( residuals( models[[ "normality_linear_model" ]]$output$model ) )
+	p <- ggqqplot( residuals( models[[ "normality_linear_model" ]]$output$model ) ) +
+		labs( 
+			title="Is there normality across all data?",
+			subtitle="Data slightly deviates from the overall normality." 
+		)
 
 	# Compute Shapiro-Wilk test of normality.
 	t <- shapiro_test( residuals( models[[ "normality_linear_model" ]]$output$model ) )

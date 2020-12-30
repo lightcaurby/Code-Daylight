@@ -19,7 +19,7 @@ run <- function(...)
 			tz2 = col_character()
 		),
 		fwf_widths(
-			c(25, 12, 12, 6, 12, 6), 
+			c(25, 12, 12, 6, 12, 4), 
 			c("location", "date", "time1", "tz1", "time2", "tz2")
 		)
 	)

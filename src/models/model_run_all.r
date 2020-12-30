@@ -34,14 +34,10 @@ run <- function( input, ... )
 	# Phase 2 model sources.
 	models2_src <- c(
 		"extreme_outliers",
-		"normality_all_shapiro",
-		"normality_by_group_shapiro",
-		"variance_homogeneity_residuals",
-		"variance_homogeneity_levene",
-		"variance_homogeneity_fligner_killeen",
-		"variance_homogeneity_bartlett",
-		"compare_means_kruskal_wallis",
-		"compare_means_anova"
+		"normality_all",
+		"normality_by_group",
+		"variance_homogeneity",
+		"compare_means"
 	)
 	
 	# Generate phase 2 models.
