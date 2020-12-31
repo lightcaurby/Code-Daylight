@@ -60,7 +60,7 @@ run <- function( data.plot, ... )
 		scale_x_continuous(expand=c(0.01,0), breaks=data.plot$py.year) +
 		scale_y_discrete(expand = c(0.01, 0))+ 
 		ylab( "" ) +
-		xlab( "kesto (kalenterivuosia)" ) +
+		xlab( "duration (calendar years)" ) +
 		labs(title="",
 				 subtitle="")
 

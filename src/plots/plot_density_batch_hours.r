@@ -45,7 +45,7 @@ run <- function( data.plot, ... )
 											 )) +
 		scale_y_discrete(expand = c(0.025, 0))+
 		ylab( "" ) +
-		xlab( "kesto (tunnit)" ) +
+		xlab( "duration (hours)" ) +
 		labs(title="",
 				 subtitle="")
 	

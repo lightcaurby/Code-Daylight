@@ -60,7 +60,7 @@ run <- function( data.plot, ... )
 		scale_x_continuous(expand=c(0.01,0), breaks=data.plot$py.darkness) +
 		scale_y_discrete(expand = c(0.01, 0))+ 
 		ylab( "" ) +
-		xlab( "kesto (tunteja)" ) +
+		xlab( "duration (hours)" ) +
 		labs(title="",
 				 subtitle="")
 

@@ -14,10 +14,10 @@ run <- function( data.plot, ... )
 	# Plot.
 	ggplot( data=data.plot$replacements ) +
 		theme_bw() +
-		ylab("Kesto (tunteja)") + 
-		xlab("sijainti") +
-		geom_point( data = data.plot$replacements %>% filter(Vaihdettu), aes( x=Tila, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ), size=3, alpha=0.8 ) +
-		geom_point( data = data.plot$replacements %>% filter(!Vaihdettu), aes( x=Tila, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ), shape="circle open", size=5, alpha=0.8 ) +
+		ylab("duration (days)") + 
+		xlab("location") +
+		geom_point( data = data.plot$replacements %>% filter(Vaihdettu), aes( x=Tila, y = PvmEro, group=Tyyppi, color = Tyyppi ), size=3, alpha=0.8 ) +
+		geom_point( data = data.plot$replacements %>% filter(!Vaihdettu), aes( x=Tila, y = PvmEro, group=Tyyppi, color = Tyyppi ), shape="circle open", size=5, alpha=0.8 ) +
 		scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
 		scale_color_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
 		#scale_y_continuous(limits=c(0,100), breaks=seq(0,100,by=10), expand=c(0, 0)) +

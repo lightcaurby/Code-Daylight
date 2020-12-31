@@ -14,8 +14,8 @@ run <- function( data.plot, ... )
 	# Plot.
 	ggplot(data=data.plot$replacements) +
 		theme_bw() +
-		ylab("kesto (kalenterivuosia)") + 
-		xlab("asennusvuosi") +
+		ylab("duration (calendar years)") + 
+		xlab("installation year") +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & Vaihdettu) ,
 			aes( x=AsennusVuosi, y = VuosiEro, group=Tyyppi, color = Tyyppi ),

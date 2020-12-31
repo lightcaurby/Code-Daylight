@@ -12,12 +12,12 @@ run <- function( data.plot, ... )
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 	# Plot.
-	ggplot( data=data.plot$replacements %>% filter( Vaihdettu ) ) +
+	ggplot( data=data.plot$replacements %>% filter(Vaihdettu )) +
 		theme_bw() +
-		ylab("kesto (kalenterivuosia)") + 
-		xlab("erä") +
+		ylab("duration (hours)") + 
+		xlab("batch") +
 		geom_boxplot(
-			aes( x=Erä, y = VuosiEro ),
+			aes( x=Erä, y = PimeätTunnit ),
 			alpha=0.65,
 			fill = "orange",
 			color = "darkorange",

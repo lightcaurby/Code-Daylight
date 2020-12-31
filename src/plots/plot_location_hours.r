@@ -12,20 +12,14 @@ run <- function( data.plot, ... )
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 	# Plot.
-	ggplot( data=data.plot$replacements %>% filter(Vaihdettu ) ) +
+	ggplot( data=data.plot$replacements ) +
 		theme_bw() +
-		ylab("kesto (kalenterivuosia)") + 
-		xlab("asennusvuosi") +
-		geom_boxplot(
-			aes( x=AsennusVuosi, y = VuosiEro ),
-			alpha=0.65,
-			fill = "orange",
-			color = "darkorange",
-			outlier.color ="darkorange",
-			outlier.size = 3,
-			outlier.alpha = 0.8,
-			size=0.75
-		) +
+		ylab("duration (hours)") + 
+		xlab("location") +
+		geom_point( data = data.plot$replacements %>% filter(Vaihdettu), aes( x=Tila, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ), size=3, alpha=0.8 ) +
+		geom_point( data = data.plot$replacements %>% filter(!Vaihdettu), aes( x=Tila, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ), shape="circle open", size=5, alpha=0.8 ) +
+		scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
+		scale_color_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
 		#scale_y_continuous(limits=c(0,100), breaks=seq(0,100,by=10), expand=c(0, 0)) +
 		#scale_x_continuous(breaks=which( results$xlabel != "" ), labels=results$xlabel[ results$xlabel != ""], expand=c(0, 0)) +
 		theme( legend.position="bottom", 

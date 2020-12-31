@@ -14,8 +14,8 @@ run <- function( data.plot, ... )
 	# Plot.
 	ggplot( data=data.plot$replacements ) +
 		theme_bw() +
-		ylab("Kesto (kalenterivuosia)") + 
-		xlab("sijainti") +
+		ylab("duration (calendar years)") + 
+		xlab("location") +
 		geom_point( data = data.plot$replacements %>% filter(Vaihdettu), aes( x=Tila, y = VuosiEro, group=Tyyppi, color = Tyyppi ), size=3, alpha=0.8 ) +
 		geom_point( data = data.plot$replacements %>% filter(!Vaihdettu), aes( x=Tila, y = VuosiEro, group=Tyyppi, color = Tyyppi ), shape="circle open", size=5, alpha=0.8 ) +
 		scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
