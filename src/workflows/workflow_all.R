@@ -36,12 +36,16 @@ run <- function( ... )
 
 	# Output plots as PDFs.
 	cat( sprintf( "Generating PDF from each plot\n" ) )
-	lib.plots$plot_pdf_all$run( plotting_data, 4, 8 )
+	lib.plots$plot_pdf_all$run( plotting_data$plots, 4, 8 )
 
 	# Run the modeling.
 	cat( sprintf( "Running the models\n" ) )
 	plotting_data$models <- lib.models$model_run_all$run( plotting_data )
 
+	# Output model plots and tables as PDFs.
+	cat( sprintf( "Generating PDF from each model plot and table\n" ) )
+	lib.models$model_pdf_all$run( plotting_data$models )
+	
 	# Complete workflow.
 	cat( sprintf( "Workflow complete\n" ) )
 	invisible(plotting_data)

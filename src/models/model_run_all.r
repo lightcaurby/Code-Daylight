@@ -34,8 +34,7 @@ run <- function( input, ... )
 	# Phase 2 model sources.
 	models2_src <- c(
 		"extreme_outliers",
-		"normality_all",
-		"normality_by_group",
+		"normality",
 		"variance_homogeneity",
 		"compare_means"
 	)

@@ -33,4 +33,7 @@ EnsurePackage( "cowplot" )
 EnsurePackage( "egg" )
 EnsurePackage( "rstatix" )
 EnsurePackage( "utils" )
+EnsurePackage( "grid" )
+EnsurePackage( "gridGraphics" )
+EnsurePackage( "Cairo" )
 

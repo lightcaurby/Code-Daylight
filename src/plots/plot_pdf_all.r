@@ -6,16 +6,16 @@ import( "grDevices" )
 export( "run" )
 
 # Create a PDF for each plot.
-run <- function( data.plot, height, width, ... )
+run <- function( data.plots, height, width, ... )
 {
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
 	# Output all plots.
-	invisible( lapply(data.plot$plots, function( p ) {
+	invisible( lapply(data.plots, function( p ) {
 		
 		# Output this plot.
-		fn <- paste0( "output/plots/", "_", p$name, ".pdf" )
+		fn <- paste0( "output/plots/", "plot_", p$name, ".pdf" )
 		fn <- here( fn )
 		
 		# Check if the file needs to be cleaned first.
