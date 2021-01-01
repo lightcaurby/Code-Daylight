@@ -18,38 +18,43 @@ run <- function( ... )
 	cachedInputAvailable <- lib.io$cachedInput$is.available()
 	
 	# Read input data.
-	cat( sprintf( "Reading daylight info\n" ) )
-	if( cachedInputAvailable )
-		cat( sprintf( "\t(skipped, already available)\n" ) )
-	else
-		daylight_info <- lib.io$daylight_info$read()
-	cat( sprintf( "Reading replacement data\n" ) )
-	if( cachedInputAvailable )
-		cat( sprintf( "\t(skipped, already available)\n" ) )
-	else
-		replacements <- lib.io$replacements$read()
-	cat( sprintf( "Reading batch data\n" ) )
-	if( cachedInputAvailable )
-		cat( sprintf( "\t(skipped, already available)\n" ) )
-	else
-		batches <- lib.io$batches$read()
+	daylight_info <- runIfNotCachedDataAvailable(
+		sprintf( "Reading daylight info\n" ),
+		cachedInputAvailable,
+		lib.io$daylight_info$read
+	)
+	replacements <- runIfNotCachedDataAvailable(
+		sprintf( "Reading replacement data\n" ),
+		cachedInputAvailable,
+		lib.io$replacements$read
+	)
+	batches <- runIfNotCachedDataAvailable(
+		sprintf( "Reading batch data\n" ),
+		cachedInputAvailable,
+		lib.io$batches$read
+	)
 
 	# Transform the input data.
-	cat( sprintf( "Wrangling daylight info\n" ) )
-	if( cachedInputAvailable )
-		cat( sprintf( "\t(skipped, already available)\n" ) )
-	else
-		daylight_info <- lib.transform$wrangle_daylight_info$run( daylight_info)
-	cat( sprintf( "Wrangling replacements data\n" ) )
-	if( cachedInputAvailable )
-		cat( sprintf( "\t(skipped, already available)\n" ) )
-	else
-		replacements <- lib.transform$wrangle_replacements$run( replacements, batches, daylight_info )
-	cat( sprintf( "Preparing plotting data\n" ) )
-	if( cachedInputAvailable )
-		cat( sprintf( "\t(skipped, already available)\n" ) )
-	else
-		plotting_data <-  lib.transform$prepare_replacements_for_plotting$run( replacements )
+	daylight_info <- runIfNotCachedDataAvailable(
+		sprintf( "Wrangling daylight info\n" ),
+		cachedInputAvailable,
+		lib.transform$wrangle_daylight_info$run,
+		daylight_info
+	)
+	replacements <- runIfNotCachedDataAvailable(
+		sprintf( "Wrangling replacements data\n" ),
+		cachedInputAvailable,
+		lib.transform$wrangle_replacements$run,
+		replacements,
+		batches,
+		daylight_info
+	)
+	plotting_data <- runIfNotCachedDataAvailable(
+		sprintf( "Preparing plotting data\n" ),
+		cachedInputAvailable,
+		lib.transform$prepare_replacements_for_plotting$run,
+		replacements
+	)
 
 	#	Process the cached the input data.
 	cat( sprintf( "Starting to use the prepared input data\n" ) )
@@ -89,5 +94,16 @@ run <- function( ... )
 	invisible(plotting_data)
 }
 
+# Conditionally runs the specified function.
+runIfNotCachedDataAvailable <- function( message, cachedInputAvailable, f, ... )
+{
+	result = NULL
+	cat( message )
+	if( cachedInputAvailable )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	else
+		result <- f( ... )
+	result
+}
 
 
