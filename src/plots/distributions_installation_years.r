@@ -9,7 +9,7 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot( data=data.plot$replacements %>% filter(Vaihdettu ) ) +

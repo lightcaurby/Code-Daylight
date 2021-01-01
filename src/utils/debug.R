@@ -4,7 +4,7 @@ import( "utils" )
 
 export( "run" )
 
-# Read daylight info,
+# Break with debugger if configured to do so.
 run <- function( func, ... )
 {
 	# Get the script name for the provided function.

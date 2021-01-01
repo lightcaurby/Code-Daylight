@@ -11,20 +11,21 @@ export( "run" )
 run <- function( input, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Use the intermediate data file if available.
-	intermediateDataPath <- here( "data/temp/models.rds")
+	intermediateDataPath <- here( "data/temp/models.rds" )
 	
 	# Check if the file needs to be cleaned first.
 	myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )
 	if( myopts$clean & file.exists( intermediateDataPath ) ) file.remove( intermediateDataPath )
 	
-	# Use the intermediate file or run the modeling from scratch.	
+	# Use the intermediate file or run the modeling from scratch.
 	result = NULL
 	if( file.exists( intermediateDataPath ) )
 	{
 		# Read the data from the file.
+		cat( sprintf( "\tReading the model data from the cached RDS file\n" ) )
 		result <- readRDS( intermediateDataPath )
 
 		# Indicate reading from cache instead of an actual run.
@@ -36,9 +37,10 @@ run <- function( input, ... )
 		result = runImpl( input, ... )
 		
 		# Write to a data file.
+		cat( sprintf( "\tSaving the model data to a cached RDS file\n" ) )
 		saveRDS( result, intermediateDataPath )
 
-		# Indicate actual run.		
+		# Indicate actual run.
 		result$actualRun <- TRUE
 	}
 
@@ -62,7 +64,7 @@ runImpl <- function( input, ... )
 		cat( sprintf( "\tRunning phase 1 model '%s'\n", p ) )
 		list( 
 			name = p,
-			output = lib.models[[ paste0( "model_", p ) ]]$run( input )
+			output = lib.models[[ p ]]$run( input )
 		)
 	} )
 	names( models1 ) <- models1_src
@@ -80,7 +82,7 @@ runImpl <- function( input, ... )
 		cat( sprintf( "\tRunning phase 2 model '%s'\n", p ) )
 		list( 
 			name = p,
-			output = lib.models[[ paste0( "model_", p ) ]]$run( input, models1 )
+			output = lib.models[[ p ]]$run( input, models1 )
 		)
 	} )
 	names( models2 ) <- models2_src

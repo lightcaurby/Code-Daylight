@@ -10,7 +10,7 @@ export( "run" )
 run <- function( replacements, batches, daylight_info, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Combine the replacements and the batches.
 	output <- replacements %>% 

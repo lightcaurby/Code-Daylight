@@ -9,7 +9,7 @@ export( "run" )
 run <- function( data.plots, height, width, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Target directory.
 	targetDir <- "output/plots/"

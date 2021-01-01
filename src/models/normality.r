@@ -16,7 +16,7 @@ lib.models.common <- suppressPackageStartupMessages( modules::use( here( "src/mo
 run <- function( input, models, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Subroutines.
 	baseName <- "run.normality."

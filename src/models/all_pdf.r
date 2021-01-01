@@ -11,7 +11,7 @@ export( "run" )
 run <- function( data.models, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Get the custom options.
 	myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )

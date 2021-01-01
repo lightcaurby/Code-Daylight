@@ -9,6 +9,6 @@ options( "lightcaurby.Code-Daylight" = list(
 ))
 
 # Main workflow.
-lib <- suppressPackageStartupMessages( modules::use( here("src/workflows") ) )
-result <- lib$workflow_all$run()
+lib.workflows <- suppressPackageStartupMessages( modules::use( here("src/workflows") ) )
+result <- lib.workflows$full$run()
 

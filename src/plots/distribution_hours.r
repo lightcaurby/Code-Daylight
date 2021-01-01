@@ -9,7 +9,7 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot() +
@@ -18,13 +18,13 @@ run <- function( data.plot, ... )
 			panel.border = element_blank(),
 			axis.ticks = element_blank(),
 			axis.text.y = element_text(vjust=0),
-			#axis.title.x = element_text(hjust=1)
+			#axis.title.x = element_text(hjust=1),
 			plot.subtitle = element_text( vjust=1 ),
 			plot.title = element_text( vjust = 1, margin = margin(b = 0, unit="line"))
 		) +
 		geom_density(
 			data=data.plot$replacements %>% filter( Vaihdettu ),
-			aes( x=VuosiEro ),
+			aes( x=PimeätTunnit ),
 			fill = "orange",
 			color = "darkorange",
 			#rel_min_height = 0.001,
@@ -36,7 +36,7 @@ run <- function( data.plot, ... )
 			#color = df.Sampling$fill
 		) +
 		geom_segment(
-			data = as.data.frame(data.plot$dms.year),
+			data = as.data.frame(data.plot$dms.hour),
 			aes(
 				x=x,
 				xend = x,
@@ -57,10 +57,10 @@ run <- function( data.plot, ... )
 		# 	vjust = 1.5,
 		# 	hjust = 1.5
 		# ) +
-		scale_x_continuous(expand=c(0.01,0), breaks=data.plot$py.year) +
+		scale_x_continuous(expand=c(0.01,0), breaks=data.plot$py.darkness) +
 		scale_y_discrete(expand = c(0.01, 0))+ 
 		ylab( "" ) +
-		xlab( "duration (calendar years)" ) +
+		xlab( "duration (hours)" ) +
 		labs(title="",
 				 subtitle="")
 

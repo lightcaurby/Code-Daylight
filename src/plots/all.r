@@ -11,7 +11,7 @@ export( "run" )
 run <- function( input, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Use the intermediate data file if available.
 	intermediateDataPath <- here( "data/temp/plots.rds")
@@ -25,6 +25,7 @@ run <- function( input, ... )
 	if( file.exists( intermediateDataPath ) )
 	{
 		# Read the data from the file.
+		cat( sprintf( "\tReading the plot data from the cached RDS file\n" ) )
 		result <- readRDS( intermediateDataPath )
 		
 		# Indicate reading from cache instead of an actual run.
@@ -36,6 +37,7 @@ run <- function( input, ... )
 		result = runImpl( input, ... )
 		
 		# Write to a data file.
+		cat( sprintf( "\tSaving the plot data to a cached RDS file\n" ) )
 		saveRDS( result, intermediateDataPath )
 	
 		# Indicate actual run.		
@@ -74,7 +76,7 @@ runImpl <- function( input, ... )
 	plots <- lapply( plot_src, function( p ) {
 		list( 
 			name = p,
-			plot = lib.plots[[ paste0( "plot_", p ) ]]$run( input )
+			plot = lib.plots[[  p ]]$run( input )
 		)
 	} )
 	names( plots ) <- plot_src

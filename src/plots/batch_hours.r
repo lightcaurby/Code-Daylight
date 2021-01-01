@@ -9,35 +9,35 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot( data=data.plot$replacements ) +
 		theme_bw() +
 		ylab("duration (hours)") + 
-		xlab("installation year") +
+		xlab("batch") +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & Vaihdettu ) ,
-			aes( x=AsennusVuosi, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
+			aes( x=Erä, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
 			size=3,
 			alpha=0.8
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & !Vaihdettu ) ,
-			aes( x=AsennusVuosi, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
+			aes( x=Erä, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
 			alpha=0.8
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & Vaihdettu ) ,
-			aes( x=AsennusVuosi, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
+			aes( x=Erä, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
 			size=3,
 			alpha=0.8
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & !Vaihdettu ) ,
-			aes( x=AsennusVuosi, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
+			aes( x=Erä, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
 			alpha=0.8
@@ -64,3 +64,4 @@ run <- function( data.plot, ... )
 					 plot.margin = unit(c(1,1,0.5,1), "cm"))
 
 }
+

@@ -9,15 +9,15 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
+	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot( data=data.plot$replacements %>% filter(Vaihdettu )) +
 		theme_bw() +
 		ylab("duration (hours)") + 
-		xlab("installation year") +
+		xlab("batch") +
 		geom_boxplot(
-			aes( x=AsennusVuosi, y = PimeätTunnit ),
+			aes( x=Erä, y = PimeätTunnit ),
 			alpha=0.65,
 			fill = "orange",
 			color = "darkorange",
@@ -36,3 +36,4 @@ run <- function( data.plot, ... )
 					 plot.margin = unit(c(1,1,0.5,1), "cm"))
 
 }
+
