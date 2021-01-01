@@ -2,10 +2,10 @@ import( "here" )
 import( "modules" )
 import( "readr" )
 
-export( "run" )
+export( "read" )
 
-# Read daylight info,
-run <- function(...)
+# Read lamp replacement data.
+read <- function( ... )
 {
 	# Read the CSV data.
 	read_csv( here( "data/raw/vaihdot.csv" ), col_types ="fDffc", comment="#" )

@@ -2,10 +2,10 @@ import( "here" )
 import( "modules" )
 import( "readr" )
 
-export( "run" )
+export( "read" )
 
-# Read daylight info,
-run <- function(...)
+# Read daylight info.
+read <- function( ... )
 {
 	# Read the tabular data.
 	read_fwf(

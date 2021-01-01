@@ -3,7 +3,7 @@ source( file = "src/env.R" )
 
 # Flags.
 options( "lightcaurby.Code-Daylight" = list(
-	clean = FALSE,	# Whether to remove output files before generating them again.
+	clean = T,	# Whether to remove output files before generating them again.
 	debug = c(			# Module names to stop in.
 	)
 ))
@@ -11,3 +11,4 @@ options( "lightcaurby.Code-Daylight" = list(
 # Main workflow.
 lib <- suppressPackageStartupMessages( modules::use( here("src/workflows") ) )
 result <- lib$workflow_all$run()
+

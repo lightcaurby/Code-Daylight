@@ -17,10 +17,14 @@ run <- function( data.models, ... )
 	myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )
 	
 	# Output all plots.
-	OutputPDF( data.models, "plot", "output/plots/", myopts )
+	targetDir <- "output/plots/"
+	cat( sprintf( "\tGenerating files to '%s'\n", here( targetDir ) ) )
+	OutputPDF( data.models, "plot", targetDir, myopts )
 
 	# Output all tables.
-	OutputPDF( data.models, "table", "output/tables/", myopts )
+	targetDir <- "output/tables/"
+	cat( sprintf( "\tGenerating files to '%s'\n", here( targetDir ) ) )
+	OutputPDF( data.models, "table", targetDir, myopts )
 
 	invisible( TRUE )
 }
@@ -49,11 +53,12 @@ Process <- function( rootDir, myopts, source, toplevelName, outputObject, output
 	dims <- DetermineDimensions( source, outputType )
 	
 	# Determine the file name of the output.
-	fn <- NULL
+	fnBase <- NULL
 	if( ! is.null( upperLevel ) )
-		fn <- paste0( "output/", outputType, "s/", "model_", toplevelName, ".", upperLevel, ".pdf" )
+		fnBase <- paste0( "model_", toplevelName, ".", upperLevel, ".pdf" )
 	else
-		fn <- paste0( "output/", outputType, "s/", "model_", toplevelName, ".pdf" )
+		fnBase <- paste0( "model_", toplevelName, ".pdf" )
+	fn <- paste0( rootDir, fnBase )
 	fn <- here( fn )
 
 	# Check if the file needs to be cleaned first.
@@ -61,14 +66,19 @@ Process <- function( rootDir, myopts, source, toplevelName, outputObject, output
 	
 	# Output the PDF file.
 	# Generate the PDF file if it does not exist.
+	cat( sprintf( "\tGenerating '%s'", fnBase ) )
 	if( file.exists( fn ) == FALSE )
 	{
-		cat( sprintf( "\tGenerating PDF file '%s'\n", fn ) )
+		cat( sprintf( "\n" ) )
 		pdf( file = fn, height=dims$h, width=dims$w )
 		if( ! "ggplot" %in% class( outputObject ) )
 			grid.newpage()
 		grid.draw( outputObject )
 		dev.off()
+	}
+	else
+	{
+		cat( sprintf( " (skipped, already available)\n" ) )
 	}
 }
 

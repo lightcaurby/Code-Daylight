@@ -7,15 +7,51 @@ import( "rstatix" )
 
 export( "run" )
 
-# Run all modeling.
+# Run all plotting.
 run <- function( input, ... )
 {
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
+	# Use the intermediate data file if available.
+	intermediateDataPath <- here( "data/temp/plots.rds")
+	
+	# Check if the file needs to be cleaned first.
+	myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )
+	if( myopts$clean & file.exists( intermediateDataPath ) ) file.remove( intermediateDataPath )
+	
+	# Use the intermediate file or run the modeling from scratch.	
+	result = NULL
+	if( file.exists( intermediateDataPath ) )
+	{
+		# Read the data from the file.
+		result <- readRDS( intermediateDataPath )
+		
+		# Indicate reading from cache instead of an actual run.
+		result$actualRun <- FALSE
+	}
+	else
+	{
+		# Actual run.
+		result = runImpl( input, ... )
+		
+		# Write to a data file.
+		saveRDS( result, intermediateDataPath )
+	
+		# Indicate actual run.		
+		result$actualRun <- TRUE
+	}
+	
+	# Return value.
+	invisible( result )
+}
+
+# Run all plotting.
+runImpl <- function( input, ... )
+{
 	# Use the modules.
 	lib.plots <- suppressPackageStartupMessages( modules::use( here( "src/plots" ) ) )
-
+	
 	# All plot sources.
 	plot_src <- c(
 		"installation_hours",
@@ -36,13 +72,20 @@ run <- function( input, ... )
 	
 	# Generate plots.
 	plots <- lapply( plot_src, function( p ) {
-			list( 
-					name = p,
-					plot = lib.plots[[ paste0( "plot_", p ) ]]$run( input )
-			)
-		} )
+		list( 
+			name = p,
+			plot = lib.plots[[ paste0( "plot_", p ) ]]$run( input )
+		)
+	} )
 	names( plots ) <- plot_src
-
-	invisible( plots )
+	
+	# Construct result.
+	result <- list(
+		grobs = plots,
+		actualRun = NA
+	)
+	
+	# Return value.
+	invisible( result )
+	
 }
-

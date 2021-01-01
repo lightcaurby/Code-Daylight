@@ -14,36 +14,74 @@ run <- function( ... )
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
+	# Check if the cached input data is available.
+	cachedInputAvailable <- lib.io$cachedInput$is.available()
+	
 	# Read input data.
 	cat( sprintf( "Reading daylight info\n" ) )
-	daylight_info <- lib.io$input_daylight_info$run()
+	if( cachedInputAvailable )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	else
+		daylight_info <- lib.io$daylight_info$read()
 	cat( sprintf( "Reading replacement data\n" ) )
-	replacements <- lib.io$input_replacements$run()
+	if( cachedInputAvailable )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	else
+		replacements <- lib.io$replacements$read()
 	cat( sprintf( "Reading batch data\n" ) )
-	batches <- lib.io$input_batches$run()
+	if( cachedInputAvailable )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	else
+		batches <- lib.io$batches$read()
 
 	# Transform the input data.
 	cat( sprintf( "Wrangling daylight info\n" ) )
-	daylight_info <- lib.transform$wrangle_daylight_info$run( daylight_info)
+	if( cachedInputAvailable )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	else
+		daylight_info <- lib.transform$wrangle_daylight_info$run( daylight_info)
 	cat( sprintf( "Wrangling replacements data\n" ) )
-	replacements <- lib.transform$wrangle_replacements$run( replacements, batches, daylight_info )
+	if( cachedInputAvailable )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	else
+		replacements <- lib.transform$wrangle_replacements$run( replacements, batches, daylight_info )
 	cat( sprintf( "Preparing plotting data\n" ) )
-	plotting_data <-  lib.transform$prepare_replacements_for_plotting$run( replacements )
+	if( cachedInputAvailable )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	else
+		plotting_data <-  lib.transform$prepare_replacements_for_plotting$run( replacements )
+
+	#	Process the cached the input data.
+	cat( sprintf( "Starting to use the prepared input data\n" ) )
+	if( cachedInputAvailable )
+	{
+		cat( sprintf( "\tReading the input data from the cached RDS file\n" ) )
+		plotting_data <- lib.io$cachedInput$read()
+	}
+	else
+	{
+		cat( sprintf( "\tSaving the input data to a cached RDS file\n" ) )
+		lib.io$cachedInput$save( plotting_data )
+	}
 
 	# Generate plots.
 	cat( sprintf( "Generating plots\n" ) )
 	plotting_data$plots <- lib.plots$plot_run_all$run( plotting_data )
-
+	if( plotting_data$plots$actualRun == FALSE )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	
 	# Output plots as PDFs.
-	cat( sprintf( "Generating PDF from each plot\n" ) )
+	cat( sprintf( "Generating an output file for each plot\n" ) )
 	lib.plots$plot_pdf_all$run( plotting_data$plots, 4, 8 )
 
 	# Run the modeling.
 	cat( sprintf( "Running the models\n" ) )
 	plotting_data$models <- lib.models$model_run_all$run( plotting_data )
-
+	if( plotting_data$models$actualRun == FALSE )
+		cat( sprintf( "\t(skipped, already available)\n" ) )
+	
 	# Output model plots and tables as PDFs.
-	cat( sprintf( "Generating PDF from each model plot and table\n" ) )
+	cat( sprintf( "Generating an output file for each model and table\n" ) )
 	lib.models$model_pdf_all$run( plotting_data$models )
 	
 	# Complete workflow.

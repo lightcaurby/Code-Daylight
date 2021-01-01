@@ -11,11 +11,16 @@ run <- function( data.plots, height, width, ... )
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$utils_debug$run( run )
 
+	# Target directory.
+	targetDir <- "output/plots/"
+	cat( sprintf( "\tGenerating files to '%s'\n", here( targetDir ) ) )
+	
 	# Output all plots.
-	invisible( lapply(data.plots, function( p ) {
+	invisible( lapply(data.plots$grobs, function( p ) {
 		
 		# Output this plot.
-		fn <- paste0( "output/plots/", "plot_", p$name, ".pdf" )
+		fnBase <- paste0( "plot_", p$name, ".pdf" )
+		fn <- paste0( targetDir, fnBase )
 		fn <- here( fn )
 		
 		# Check if the file needs to be cleaned first.
@@ -23,14 +28,20 @@ run <- function( data.plots, height, width, ... )
 		if( myopts$clean & file.exists( fn ) ) file.remove( fn )
 	
 		# Generate the PDF file if it does not exist.
+		cat( sprintf( "\tGenerating '%s'", fnBase ) )
 		if( file.exists( fn ) == FALSE )
 		{
 			# Generate PDF.
-			cat( sprintf( "\tGenerating PDF file '%s'\n", fn ) )
+			cat( sprintf( "\n" ) )
 			pdf( file = fn, height=height, width=width)
 				print( p$plot )
 			dev.off()
 		}
+		else
+		{
+			cat( sprintf( " (skipped, already available)\n" ) )
+		}
+		
 
 	} ) )
 	
