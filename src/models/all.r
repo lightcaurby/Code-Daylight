@@ -22,7 +22,7 @@ run <- function( input, ... )
 	
 	# Use the intermediate file or run the modeling from scratch.
 	result = NULL
-	if( file.exists( intermediateDataPath ) )
+	if( myopts$cache.models & file.exists( intermediateDataPath ) )
 	{
 		# Read the data from the file.
 		cat( sprintf( "\tReading the model data from the cached RDS file\n" ) )
@@ -37,8 +37,11 @@ run <- function( input, ... )
 		result = runImpl( input, ... )
 		
 		# Write to a data file.
-		cat( sprintf( "\tSaving the model data to a cached RDS file\n" ) )
-		saveRDS( result, intermediateDataPath )
+		if( myopts$cache.models )
+		{
+			cat( sprintf( "\tSaving the model data to a cached RDS file\n" ) )
+			saveRDS( result, intermediateDataPath )
+		}
 
 		# Indicate actual run.
 		result$actualRun <- TRUE

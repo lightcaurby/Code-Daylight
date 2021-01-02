@@ -20,9 +20,9 @@ run <- function( input, ... )
 	myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )
 	if( myopts$clean & file.exists( intermediateDataPath ) ) file.remove( intermediateDataPath )
 	
-	# Use the intermediate file or run the modeling from scratch.	
+	# Use the intermediate file or run the plot generation from scratch.	
 	result = NULL
-	if( file.exists( intermediateDataPath ) )
+	if( myopts$cache.plots & file.exists( intermediateDataPath ) )
 	{
 		# Read the data from the file.
 		cat( sprintf( "\tReading the plot data from the cached RDS file\n" ) )
@@ -37,8 +37,11 @@ run <- function( input, ... )
 		result = runImpl( input, ... )
 		
 		# Write to a data file.
-		cat( sprintf( "\tSaving the plot data to a cached RDS file\n" ) )
-		saveRDS( result, intermediateDataPath )
+		if( myopts$cache.plots )
+		{
+			cat( sprintf( "\tSaving the plot data to a cached RDS file\n" ) )
+			saveRDS( result, intermediateDataPath )
+		}
 	
 		# Indicate actual run.		
 		result$actualRun <- TRUE
