@@ -20,7 +20,9 @@ run <- function( data.plot, ... )
 			axis.text.y = element_text(vjust=0),
 			#axis.title.x = element_text(hjust=1)
 			plot.subtitle = element_text( vjust=1 ),
-			plot.title = element_text( vjust = 1, margin = margin(b = 0, unit="line"))
+			plot.title = element_text( vjust = 1, margin = margin(b = 0, unit="line")),
+			axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0 )),
+			axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0 ))
 		) +
 		geom_density(
 			data=data.plot$replacements %>% filter( Vaihdettu ),

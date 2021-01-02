@@ -44,7 +44,7 @@ run <- function( data.plot, ... )
 		) +
 		geom_smooth(
 			data = data.plot$replacements %>% filter( Vaihdettu ) ,
-			aes( x=as.numeric( AsennusVuosi ), y=PimeätTunnit ),
+			aes( x=as.numeric( Erä ), y=PimeätTunnit ),
 			se = F,
 			method="loess",
 			span = 0.75,
@@ -52,8 +52,8 @@ run <- function( data.plot, ... )
 			linetype ="dashed",
 			size = 1
 		) +
-		scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
-		scale_color_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
+		scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led"), labels = c("fluorescent", "led")) +
+		scale_color_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led"), labels = c("fluorescent", "led")) +
 		#scale_y_continuous(limits=c(0,100), breaks=seq(0,100,by=10), expand=c(0, 0)) +
 		#scale_x_continuous(breaks=which( results$xlabel != "" ), labels=results$xlabel[ results$xlabel != ""], expand=c(0, 0)) +
 		theme( legend.position="bottom", 
@@ -61,7 +61,10 @@ run <- function( data.plot, ... )
 					 panel.grid.minor=element_blank(),
 					 panel.border=element_blank(),
 					 axis.ticks=element_blank(),
-					 plot.margin = unit(c(1,1,0.5,1), "cm"))
+					 plot.margin = unit(c(1,1,0.5,1), "cm"),
+					 axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0) ),
+					 axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)))
+	
 
 }
 

@@ -18,8 +18,8 @@ run <- function( data.plot, ... )
 		xlab("location") +
 		geom_point( data = data.plot$replacements %>% filter(Vaihdettu), aes( x=Tila, y = PvmEro, group=Tyyppi, color = Tyyppi ), size=3, alpha=0.8 ) +
 		geom_point( data = data.plot$replacements %>% filter(!Vaihdettu), aes( x=Tila, y = PvmEro, group=Tyyppi, color = Tyyppi ), shape="circle open", size=5, alpha=0.8 ) +
-		scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
-		scale_color_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led")) +
+		scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led"), labels = c("fluorescent", "led")) +
+		scale_color_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led"), labels = c("fluorescent", "led")) +
 		#scale_y_continuous(limits=c(0,100), breaks=seq(0,100,by=10), expand=c(0, 0)) +
 		#scale_x_continuous(breaks=which( results$xlabel != "" ), labels=results$xlabel[ results$xlabel != ""], expand=c(0, 0)) +
 		theme( legend.position="bottom", 
@@ -27,6 +27,9 @@ run <- function( data.plot, ... )
 					 panel.grid.minor=element_blank(),
 					 panel.border=element_blank(),
 					 axis.ticks=element_blank(),
-					 plot.margin = unit(c(1,1,0.5,1), "cm"))
+					 plot.margin = unit(c(1,1,0.5,1), "cm"),
+					 axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0) ),
+					 axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)))
+	
 
 }
