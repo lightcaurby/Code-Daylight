@@ -16,13 +16,13 @@ import( "graphics" )
 export( "run" )
 
 # Use the modules.
-lib.models.common <- suppressPackageStartupMessages( modules::use( here( "src/models/common" ) ) )
+lib.models.common <- suppressPackageStartupMessages( modules::use( here::here( "src/models/common" ) ) )
 
 # Comparing the means.
 run <- function( input, models, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Subroutines.
 	baseName <- "run.compare.means."

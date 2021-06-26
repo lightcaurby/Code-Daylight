@@ -7,7 +7,7 @@ export( "read" )
 export( "save" )
 
 # Target file path.
-dataPath = here( "data/temp/input.rds" )
+dataPath = here::here( "data/temp/input.rds" )
 
 # Is the cached input data available?
 is.available <- function( ... )

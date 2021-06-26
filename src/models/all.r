@@ -11,10 +11,10 @@ export( "run" )
 run <- function( input, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Use the intermediate data file if available.
-	intermediateDataPath <- here( "data/temp/models.rds" )
+	intermediateDataPath <- here::here( "data/temp/models.rds" )
 	
 	# Check if the file needs to be cleaned first.
 	myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )
@@ -55,7 +55,7 @@ run <- function( input, ... )
 runImpl <- function( input, ... )
 {
 	# Use the modules.
-	lib.models <- suppressPackageStartupMessages( modules::use( here( "src/models" ) ) )
+	lib.models <- suppressPackageStartupMessages( modules::use( here::here( "src/models" ) ) )
 	
 	# Phase 1 model sources.
 	models1_src <- c(

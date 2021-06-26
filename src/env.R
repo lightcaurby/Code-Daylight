@@ -16,6 +16,8 @@ checkpoint( "2020-11-30" )
 # Packages.
 EnsurePackage( "here" )
 EnsurePackage( "modules" )
+EnsurePackage( "Rmisc" )
+EnsurePackage( "scales" )
 EnsurePackage( "tidyverse" )
 EnsurePackage( "broom" )
 EnsurePackage( "tidyr" )
@@ -36,4 +38,5 @@ EnsurePackage( "utils" )
 EnsurePackage( "grid" )
 EnsurePackage( "gridGraphics" )
 EnsurePackage( "Cairo" )
+
 

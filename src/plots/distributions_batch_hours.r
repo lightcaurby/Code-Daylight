@@ -9,13 +9,13 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot( data=data.plot$replacements %>% filter(Vaihdettu )) +
 		theme_bw() +
-		ylab("duration (hours)") + 
-		xlab("batch") +
+		ylab("Duration (hours)") + 
+		xlab("Batch") +
 		geom_boxplot(
 			aes( x=Erä, y = PimeätTunnit ),
 			alpha=0.65,
@@ -23,7 +23,7 @@ run <- function( data.plot, ... )
 			color = "darkorange",
 			outlier.color ="darkorange",
 			outlier.size = 3,
-			outlier.alpha = 0.8,
+			outlier.alpha = 0.5,
 			size=0.75
 		) +
 		#scale_y_continuous(limits=c(0,100), breaks=seq(0,100,by=10), expand=c(0, 0)) +

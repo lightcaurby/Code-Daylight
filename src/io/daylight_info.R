@@ -9,7 +9,7 @@ read <- function( ... )
 {
 	# Read the tabular data.
 	read_fwf(
-		file = here( "data/raw/tampere.txt" ),   
+		file = here::here( "data/raw/tampere.txt" ),   
 		col_types = cols(
 			location = col_character(),
 			date = col_date( format="%d.%m.%Y" ),

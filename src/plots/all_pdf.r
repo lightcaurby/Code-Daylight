@@ -9,11 +9,11 @@ export( "run" )
 run <- function( data.plots, height, width, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Target directory.
 	targetDir <- "output/plots/"
-	cat( sprintf( "\tGenerating files to '%s'\n", here( targetDir ) ) )
+	cat( sprintf( "\tGenerating files to '%s'\n", here::here( targetDir ) ) )
 	
 	# Output all plots.
 	invisible( lapply(data.plots$grobs, function( p ) {
@@ -21,7 +21,7 @@ run <- function( data.plots, height, width, ... )
 		# Output this plot.
 		fnBase <- paste0( "plot_", p$name, ".pdf" )
 		fn <- paste0( targetDir, fnBase )
-		fn <- here( fn )
+		fn <- here::here( fn )
 		
 		# Check if the file needs to be cleaned first.
 		myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )

@@ -9,7 +9,7 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot() +
@@ -62,7 +62,7 @@ run <- function( data.plot, ... )
 		scale_x_continuous(expand=c(0.01,0), breaks=data.plot$py.darkness) +
 		scale_y_discrete(expand = c(0.01, 0))+ 
 		ylab( "" ) +
-		xlab( "duration (hours)" ) +
+		xlab( "Duration (hours)" ) +
 		labs(title="",
 				 subtitle="")
 

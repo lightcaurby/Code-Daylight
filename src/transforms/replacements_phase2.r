@@ -7,10 +7,10 @@ import( "rstatix" )
 export( "run" )
 
 # Transform daylight info.
-run <- function( input, ... )
+run <- function( input, batches, daylight_info, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 	
 	# Prepare data.
 	output <- input %>% filter( is.na( PvmEro ) == F )
@@ -39,6 +39,8 @@ run <- function( input, ... )
 	# Return value.
 	result <- list(
 		replacements = output,
+		daylight.info = daylight_info,
+		batches = batches,
 		batches.multi = erät,
 		dms.year = dms.vuosi,
 		dms.hour = dms.tunti,

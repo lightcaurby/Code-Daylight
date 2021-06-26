@@ -10,6 +10,7 @@ A2,2010-10-27,pienloiste,1,
 A2,2013-01-12,pienloiste,2,
 A2,2014-12-06,pienloiste,4,
 A2,2019-10-03,led,8,
+A2,2021-02-14,led,10,
 #
 A3,2011-11-06,pienloiste,1,
 A3,2012-08-01,pienloiste,3,
@@ -20,6 +21,7 @@ A4,2010-09-19,pienloiste,1,
 A4,2012-08-01,pienloiste,3,
 A4,2017-11-11,pienloiste,7,
 A4,2018-10-01,led,9,8.5W
+A4,2021-06-26,led,11,5W
 #
 A5,2011-01-08,pienloiste,1,
 A5,2013-09-08,pienloiste,2,
@@ -56,6 +58,7 @@ B10,2019-11-16,led,8,
 B11,2013-11-02,pienloiste,2,
 B11,2016-08-15,pienloiste,7,
 B11,2017-12-24,led,8,
+B11,2021-06-26,led,11,5W
 #
 B12,2010-01-12,pienloiste,1,
 B12,2013-02-10,pienloiste,2,
@@ -65,15 +68,18 @@ B13,2010-08-19,pienloiste,1,
 B13,2012-08-01,pienloiste,3,
 B13,2016-01-23,pienloiste,5,
 B13,2018-10-21,led,8,
+B13,2021-03-06,led,10,
 #
 B14,2009-08-24,pienloiste,1,
 B14,2012-02-24,pienloiste,2,
 B14,2017-12-17,led,8,
 B14,2019-08-04,led,8,
+B14,2021-06-26,led,11,5W
 #
 C15,2010-03-07,pienloiste,1,
 C15,2012-08-01,pienloiste,2,
 C15,2017-10-07,pienloiste,7,
+C15,2021-02-27,led,10,
 #
 C16,2010-10-09,pienloiste,1,
 C16,2012-08-01,pienloiste,3,

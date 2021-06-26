@@ -9,38 +9,38 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot(data=data.plot$replacements) +
 		theme_bw() +
-		ylab("duration (calendar years)") + 
-		xlab("batch") +
+		ylab("Duration (calendar years)") + 
+		xlab("Batch") +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & Vaihdettu) ,
 			aes( x=Erä, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
 			size=3,
-			alpha=0.8
+			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & !Vaihdettu ) ,
 			aes( x=Erä, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
-			alpha=0.8
+			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & Vaihdettu ) ,
 			aes( x=Erä, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
 			size=3,
-			alpha=0.8
+			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & !Vaihdettu ) ,
 			aes( x=Erä, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
-			alpha=0.8
+			alpha=0.5
 		) +
 		# geom_smooth(
 		# 	aes( x=as.numeric( AsennusVuosi ), y=VuosiEro),

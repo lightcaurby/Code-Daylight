@@ -11,10 +11,10 @@ export( "run" )
 run <- function( input, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Use the intermediate data file if available.
-	intermediateDataPath <- here( "data/temp/plots.rds")
+	intermediateDataPath <- here::here( "data/temp/plots.rds")
 	
 	# Check if the file needs to be cleaned first.
 	myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )
@@ -55,7 +55,7 @@ run <- function( input, ... )
 runImpl <- function( input, ... )
 {
 	# Use the modules.
-	lib.plots <- suppressPackageStartupMessages( modules::use( here( "src/plots" ) ) )
+	lib.plots <- suppressPackageStartupMessages( modules::use( here::here( "src/plots" ) ) )
 	
 	# All plot sources.
 	plot_src <- c(

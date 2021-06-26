@@ -6,13 +6,13 @@ export(	"run" )
 run <- function( ... )
 {
 	# Read modules.
-	lib.io <- suppressPackageStartupMessages( modules::use( here( "src/io" ) ) )
-	lib.transform <- suppressPackageStartupMessages( modules::use( here( "src/transforms" ) ) )
-	lib.plots <- suppressPackageStartupMessages( modules::use( here( "src/plots" ) ) )
-	lib.models <- suppressPackageStartupMessages( modules::use( here( "src/models" ) ) )
-	
+	lib.io <- suppressPackageStartupMessages( modules::use( here::here( "src/io" ) ) )
+	lib.transform <- suppressPackageStartupMessages( modules::use( here::here( "src/transforms" ) ) )
+	lib.plots <- suppressPackageStartupMessages( modules::use( here::here( "src/plots" ) ) )
+	lib.models <- suppressPackageStartupMessages( modules::use( here::here( "src/models" ) ) )
+
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Check if the cached input data is available.
 	cachedInputAvailable <- lib.io$cachedInput$is.available()
@@ -53,7 +53,9 @@ run <- function( ... )
 		sprintf( "Preparing plotting data\n" ),
 		cachedInputAvailable,
 		lib.transform$replacements_phase2$run,
-		replacements
+		replacements,
+		batches,
+		daylight_info
 	)
 
 	#	Process the cached the input data.

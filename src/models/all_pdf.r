@@ -11,19 +11,19 @@ export( "run" )
 run <- function( data.models, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Get the custom options.
 	myopts <- getOption( "lightcaurby.Code-Daylight", default = list() )
 	
 	# Output all plots.
 	targetDir <- "output/plots/"
-	cat( sprintf( "\tGenerating files to '%s'\n", here( targetDir ) ) )
+	cat( sprintf( "\tGenerating files to '%s'\n", here::here( targetDir ) ) )
 	OutputPDF( data.models, "plot", targetDir, myopts )
 
 	# Output all tables.
 	targetDir <- "output/tables/"
-	cat( sprintf( "\tGenerating files to '%s'\n", here( targetDir ) ) )
+	cat( sprintf( "\tGenerating files to '%s'\n", here::here( targetDir ) ) )
 	OutputPDF( data.models, "table", targetDir, myopts )
 
 	invisible( TRUE )
@@ -59,7 +59,7 @@ Process <- function( rootDir, myopts, source, toplevelName, outputObject, output
 	else
 		fnBase <- paste0( "model_", toplevelName, ".pdf" )
 	fn <- paste0( rootDir, fnBase )
-	fn <- here( fn )
+	fn <- here::here( fn )
 
 	# Check if the file needs to be cleaned first.
 	if( myopts$clean & file.exists( fn ) ) file.remove( fn )

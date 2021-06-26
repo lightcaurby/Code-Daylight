@@ -15,7 +15,7 @@ import( "graphics" )
 export( "run" )
 
 # Use the modules.
-lib.models.common <- suppressPackageStartupMessages( modules::use( here( "src/models/common" ) ) )
+lib.models.common <- suppressPackageStartupMessages( modules::use( here::here( "src/models/common" ) ) )
 
 # The residuals versus fits plot can be used to check the homogeneity of variances.
 # If in the plot below there is no evident relationships between residuals and fitted values 
@@ -23,7 +23,7 @@ lib.models.common <- suppressPackageStartupMessages( modules::use( here( "src/mo
 run <- function( input, models, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 	
 	# Subroutines.
 	baseName <- "run.variance.homogeneity."

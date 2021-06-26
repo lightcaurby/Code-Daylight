@@ -9,38 +9,38 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot( data=data.plot$replacements ) +
 		theme_bw() +
-		ylab("duration (hours)") + 
-		xlab("batch") +
+		ylab("Duration (hours)") + 
+		xlab("Batch") +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & Vaihdettu ) ,
 			aes( x=Erä, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
 			size=3,
-			alpha=0.8
+			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & !Vaihdettu ) ,
 			aes( x=Erä, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
-			alpha=0.8
+			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & Vaihdettu ) ,
 			aes( x=Erä, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
 			size=3,
-			alpha=0.8
+			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & !Vaihdettu ) ,
 			aes( x=Erä, y = PimeätTunnit, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
-			alpha=0.8
+			alpha=0.5
 		) +
 		geom_smooth(
 			data = data.plot$replacements %>% filter( Vaihdettu ) ,

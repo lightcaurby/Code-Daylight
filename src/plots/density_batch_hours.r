@@ -10,7 +10,7 @@ export( "run" )
 run <- function( data.plot, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
 	ggplot( data=data.plot$replacements %>% filter(Vaihdettu & Erä %in% data.plot$batches.multi$Erä)  ) +
@@ -45,7 +45,7 @@ run <- function( data.plot, ... )
 											 )) +
 		scale_y_discrete(expand = c(0.025, 0))+
 		ylab( "" ) +
-		xlab( "duration (hours)" ) +
+		xlab( "Duration (hours)" ) +
 		labs(title="",
 				 subtitle="")
 	

@@ -11,7 +11,7 @@ export( "run" )
 run <- function( input, ... )
 {
 	# Debugger hook.
-	suppressPackageStartupMessages( modules::use( here( "src/utils" ) ) )$debug$run( run )
+	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Build the linear model.
 	data <- input$replacements %>%

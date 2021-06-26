@@ -8,6 +8,6 @@ export( "read" )
 read <- function( ... )
 {
 	# Read the CSV data.
-	read_csv( here( "data/raw/erät.csv" ), col_types ="ffc", comment="#" )
+	read_csv( here::here( "data/raw/erät.csv" ), col_types ="ffci", comment="#" )
 }
 
