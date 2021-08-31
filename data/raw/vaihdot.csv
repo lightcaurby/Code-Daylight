@@ -16,6 +16,7 @@ A3,2011-11-06,pienloiste,1,
 A3,2012-08-01,pienloiste,3,
 A3,2015-01-25,pienloiste,4,
 A3,2017-10-07,pienloiste,5,
+A3,2021-08-31,led,11,5W
 #
 A4,2010-09-19,pienloiste,1,
 A4,2012-08-01,pienloiste,3,
@@ -54,6 +55,7 @@ B10,2014-02-16,pienloiste,4,
 B10,2016-08-15,pienloiste,5,
 B10,2018-09-01,pienloiste,7,
 B10,2019-11-16,led,8,
+B10,2021-07-30,led,11,5W
 #
 B11,2013-11-02,pienloiste,2,
 B11,2016-08-15,pienloiste,7,
@@ -122,3 +124,4 @@ tekn,2008-10-03,pienloiste,1,
 tekn,2012-01-22,pienloiste,2,
 tekn,2015-10-31,pienloiste,4,
 tekn,2019-12-01,led,8,
+tekn,2021-08-31,led,11,5W
