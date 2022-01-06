@@ -11,7 +11,9 @@ EnsurePackage<-function(x)
 
 # Checkpoint.
 EnsurePackage( "checkpoint" )
-checkpoint( "2020-11-30" )
+#checkpoint( "2020-11-30" )
+checkpoint( "2021-07-25" )
+
 
 # Packages.
 EnsurePackage( "here" )
@@ -28,7 +30,7 @@ EnsurePackage( "lubridate" )
 EnsurePackage( "ggplot2" )
 EnsurePackage( "ggpubr" )
 EnsurePackage( "ggridges" )
-EnsurePackage( "ggTimeSeries" )
+#EnsurePackage( "ggTimeSeries" )
 EnsurePackage( "grid" )
 EnsurePackage( "gridExtra" )
 EnsurePackage( "cowplot" )
