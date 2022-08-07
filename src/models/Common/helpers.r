@@ -104,7 +104,7 @@ my.preprocess.table.anova <- function( table )
 	# Return value.
 	table %>%
 		filter(
-			term == "Erä"
+			term == "ErÃ¤"
 		) %>%
 		rename( 
 			df1 = df

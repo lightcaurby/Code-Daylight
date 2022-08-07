@@ -15,8 +15,8 @@ run <- function( input, ... )
 
 	# Build the linear model.
 	data <- input$replacements %>%
-		dplyr::filter( Vaihdettu & Erä %in% input$batches.multi$Erä )
-	model  <- lm( PimeätTunnit ~ Erä, data = data )
+		dplyr::filter( Vaihdettu & ErÃ¤ %in% input$batches.multi$ErÃ¤ )
+	model  <- lm( PimeÃ¤tTunnit ~ ErÃ¤, data = data )
 
 	# Construct the result.
 	result <- list(

@@ -17,7 +17,7 @@ run <- function( data.plot, ... )
 		ylab("Duration (calendar years)") + 
 		xlab("Batch") +
 		geom_boxplot(
-			aes( x=Erä, y = VuosiEro ),
+			aes( x=ErÃ¤, y = VuosiEro ),
 			alpha=0.65,
 			fill = "orange",
 			color = "darkorange",

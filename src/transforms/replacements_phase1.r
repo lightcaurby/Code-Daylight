@@ -14,8 +14,8 @@ run <- function( replacements, batches, daylight_info, ... )
 
 	# Combine the replacements and the batches.
 	output <- replacements %>% 
-		left_join( batches, by=c("Er‰" = "Er‰") ) %>%
-		rename( Er‰ID = Er‰, Er‰=Aika ) %>%
+		left_join( batches, by=c("Er√§" = "Er√§") ) %>%
+		rename( Er√§ID = Er√§, Er√§=Aika ) %>%
 		select( -Selite )
 	
 	output <- output %>%
@@ -29,7 +29,7 @@ run <- function( replacements, batches, daylight_info, ... )
 			AsennusVuosi = as.factor( lubridate::year( output$Pvm ) )
 			#AsennusVuosi = as.factor( lag( lubridate::year( output$Pvm ), 1 ) )
 		) %>%
-		mutate ( Er‰ = fct_relevel(Er‰, sort) )
+		mutate ( Er√§ = fct_relevel(Er√§, sort) )
 	
 	output <- output %>%
 		arrange( Huoneisto, Pvm ) %>%
@@ -38,7 +38,7 @@ run <- function( replacements, batches, daylight_info, ... )
 		ungroup() %>%
 		group_by( Huoneisto ) %>%
 		rowwise() %>%
-		mutate( Pime‰tTunnit = ff( Pvm, PvmSeur, daylight_info ) ) %>%
+		mutate( Pime√§tTunnit = ff( Pvm, PvmSeur, daylight_info ) ) %>%
 		ungroup()
 	
 	output <- output %>%
@@ -49,7 +49,7 @@ run <- function( replacements, batches, daylight_info, ... )
 		group_by( Huoneisto ) %>%
 		rowwise() %>%
 		mutate( 
-			Pime‰tTunnit = ifelse(is.na(PvmSeur), ff( Pvm, today(), daylight_info ), Pime‰tTunnit )
+			Pime√§tTunnit = ifelse(is.na(PvmSeur), ff( Pvm, today(), daylight_info ), Pime√§tTunnit )
 		) %>%
 		ungroup()
 	

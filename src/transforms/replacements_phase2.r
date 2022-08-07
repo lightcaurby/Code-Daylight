@@ -17,7 +17,7 @@ run <- function( input, batches, daylight_info, ... )
 	output$VuosiEro <- output$PvmEro / 365
 	output$Tila <- output$Huoneisto
 	output$ArvoVuosi <- output$VuosiEro
-	output$ArvoTunnit <- output$Pime‰tTunnit
+	output$ArvoTunnit <- output$Pime√§tTunnit
 	output$Tyyppi = factor( output$Tyyppi, levels=c("pienloiste", "led" ) )
 	
 	# Find mode values.
@@ -26,27 +26,27 @@ run <- function( input, batches, daylight_info, ... )
 	
 	py.pvm <- pretty(output$PvmEro, n=10) 
 	py.vuosi <- pretty(output$VuosiEro, n=10) 
-	py.pime‰ <- pretty(output$Pime‰tTunnit, n=10) 
+	py.pime√§ <- pretty(output$Pime√§tTunnit, n=10) 
 	
-	# Er‰t joissa enemm‰n kuin 1 rivi
-	er‰t <- output %>%
+	# Er√§t joissa enemm√§n kuin 1 rivi
+	er√§t <- output %>%
 		dplyr::filter(Vaihdettu) %>%
-		group_by(Er‰) %>%
-		get_summary_stats(Pime‰tTunnit, type = "mean_sd") %>%
+		group_by(Er√§) %>%
+		get_summary_stats(Pime√§tTunnit, type = "mean_sd") %>%
 		filter( n > 2 ) %>%
-		select( Er‰ )
+		select( Er√§ )
 	
 	# Return value.
 	result <- list(
 		replacements = output,
 		daylight.info = daylight_info,
 		batches = batches,
-		batches.multi = er‰t,
+		batches.multi = er√§t,
 		dms.year = dms.vuosi,
 		dms.hour = dms.tunti,
 		py.date = py.pvm,
 		py.year = py.vuosi,
-		py.darkness = py.pime‰
+		py.darkness = py.pime√§
 	)
 	result
 

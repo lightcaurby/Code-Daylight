@@ -90,8 +90,8 @@ run.variance.homogeneity.levene <- function( input, models, ... )
 	# With p>0.05, there is not significant difference between variances across groups, therefore
 	# we can assume the homogeneity of variances in the different treatment groups.
 	d <- input$replacements %>%
-		dplyr::filter( Vaihdettu & Er‰ %in% input$batches.multi$Er‰ ) %>%
-		levene_test( Pime‰tTunnit ~ Er‰ )
+		dplyr::filter( Vaihdettu & Er√§ %in% input$batches.multi$Er√§ ) %>%
+		levene_test( Pime√§tTunnit ~ Er√§ )
 
 	# Construct the result.
 	result <- lib.models.common$helpers$my.construct.result(
@@ -105,12 +105,12 @@ run.variance.homogeneity.bartlett <- function( input, models, ... )
 {
 	# Bartlett test to check the homogeneity of variances.
 	d <- input$replacements %>%
-		dplyr::filter( Vaihdettu & Er‰ %in% input$batches.multi$Er‰ ) %>%
-		group_by( Er‰ ) %>%
+		dplyr::filter( Vaihdettu & Er√§ %in% input$batches.multi$Er√§ ) %>%
+		group_by( Er√§ ) %>%
 		add_count() %>%
 		filter( n > 3 ) %>%
 		ungroup() %>%
-		bartlett.test( Pime‰tTunnit ~ Er‰, data = . ) %>%
+		bartlett.test( Pime√§tTunnit ~ Er√§, data = . ) %>%
 		tidy()
 	
 	# Construct the result.
@@ -125,12 +125,12 @@ run.variance.homogeneity.fligner.killeen <- function( input, models, ... )
 {
 	# Fligner-Killeen test to check the homogeneity of variances.
 	d <- input$replacements %>%
-		dplyr::filter( Vaihdettu & Er‰ %in% input$batches.multi$Er‰ ) %>%
-		group_by( Er‰ ) %>%
+		dplyr::filter( Vaihdettu & Er√§ %in% input$batches.multi$Er√§ ) %>%
+		group_by( Er√§ ) %>%
 		add_count() %>%
 		filter( n > 3 ) %>%
 		ungroup() %>%
-		fligner.test( Pime‰tTunnit ~ Er‰, data = . ) %>%
+		fligner.test( Pime√§tTunnit ~ Er√§, data = . ) %>%
 		tidy()
 	
 	# Construct the result.

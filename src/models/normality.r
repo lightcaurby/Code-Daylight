@@ -74,10 +74,10 @@ run.normality.by.group <- function( input, models, ... )
 {
 	# Filter the relevant batches.
 	relevantBatches <- input$replacements %>%
-		dplyr::filter( Vaihdettu & Er‰ %in% input$batches.multi$Er‰ )
+		dplyr::filter( Vaihdettu & Er√§ %in% input$batches.multi$Er√§ )
 	
 	# Create a QQ plot of residuals.
-	p <- ggqqplot( relevantBatches, "Pime‰tTunnit", facet.by = "Er‰" ) +
+	p <- ggqqplot( relevantBatches, "Pime√§tTunnit", facet.by = "Er√§" ) +
 		labs(
 			title="Is there normality within each batch?",
 			subtitle="Normality seems to apply to most of the batches."
@@ -85,8 +85,8 @@ run.normality.by.group <- function( input, models, ... )
 	
 	# Compute Shapiro-Wilk test of normality.
 	d <- relevantBatches %>%
-		group_by( Er‰ ) %>%
-		shapiro_test( Pime‰tTunnit )
+		group_by( Er√§ ) %>%
+		shapiro_test( Pime√§tTunnit )
 	
 	# Construct the result.
 	result <- lib.models.common$helpers$my.construct.result(
@@ -108,15 +108,15 @@ run.normality.summary <- function( input, models, result, ... )
 		result[[ "all" ]]$data %>%
 			rename( p = p.value ) %>%
 			mutate(
-				Er‰ = "Combined",
-				variable = "Pime‰tTunnit"
+				Er√§ = "Combined",
+				variable = "Pime√§tTunnit"
 			) %>%
 			mutate( 
 				reject = ( p < 0.05 ),
 				statistic = lib.models.common$helpers$my.decimal.format( ., statistic, 3  ),
 				p = lib.models.common$helpers$my.decimal.format( ., p, 3  )
 			) %>%
-			select( Er‰, variable, statistic, p, reject ),
+			select( Er√§, variable, statistic, p, reject ),
 		
 		result[[ "by.group" ]]$data %>%
 			mutate( 
@@ -124,7 +124,7 @@ run.normality.summary <- function( input, models, result, ... )
 				statistic = lib.models.common$helpers$my.decimal.format( ., statistic, 3  ),
 				p = lib.models.common$helpers$my.decimal.format( ., p, 3  )
 			) %>%
-			select( Er‰, variable, statistic, p, reject )
+			select( Er√§, variable, statistic, p, reject )
 	)
 	
 	# Construct the table.

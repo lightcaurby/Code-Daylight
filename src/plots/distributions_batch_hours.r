@@ -17,7 +17,7 @@ run <- function( data.plot, ... )
 		ylab("Duration (hours)") + 
 		xlab("Batch") +
 		geom_boxplot(
-			aes( x=Erä, y = PimeätTunnit ),
+			aes( x=ErÃ¤, y = PimeÃ¤tTunnit ),
 			alpha=0.65,
 			fill = "orange",
 			color = "darkorange",

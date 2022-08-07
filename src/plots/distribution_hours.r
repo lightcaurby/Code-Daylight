@@ -26,7 +26,7 @@ run <- function( data.plot, ... )
 		) +
 		geom_density(
 			data=data.plot$replacements %>% filter( Vaihdettu ),
-			aes( x=Pime‰tTunnit ),
+			aes( x=Pime√§tTunnit ),
 			fill = "orange",
 			color = "darkorange",
 			#rel_min_height = 0.001,

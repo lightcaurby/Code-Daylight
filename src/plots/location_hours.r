@@ -16,8 +16,8 @@ run <- function( data.plot, ... )
 		theme_bw() +
 		ylab("Duration (hours)") + 
 		xlab("Location") +
-		geom_point( data = data.plot$replacements %>% filter(Vaihdettu), aes( x=Tila, y = Pime‰tTunnit, group=Tyyppi, color = Tyyppi ), size=3, alpha=0.5 ) +
-		geom_point( data = data.plot$replacements %>% filter(!Vaihdettu), aes( x=Tila, y = Pime‰tTunnit, group=Tyyppi, color = Tyyppi ), shape="circle open", size=5, alpha=0.5 ) +
+		geom_point( data = data.plot$replacements %>% filter(Vaihdettu), aes( x=Tila, y = Pime√§tTunnit, group=Tyyppi, color = Tyyppi ), size=3, alpha=0.5 ) +
+		geom_point( data = data.plot$replacements %>% filter(!Vaihdettu), aes( x=Tila, y = Pime√§tTunnit, group=Tyyppi, color = Tyyppi ), shape="circle open", size=5, alpha=0.5 ) +
 		scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led"), labels = c("fluorescent", "led")) +
 		scale_color_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led"), labels = c("fluorescent", "led")) +
 		#scale_y_continuous(limits=c(0,100), breaks=seq(0,100,by=10), expand=c(0, 0)) +

@@ -18,33 +18,33 @@ run <- function( data.plot, ... )
 		xlab("Installation year") +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & Vaihdettu ) ,
-			aes( x=AsennusVuosi, y = Pime‰tTunnit, group=Tyyppi, color = Tyyppi ),
+			aes( x=AsennusVuosi, y = Pime√§tTunnit, group=Tyyppi, color = Tyyppi ),
 			size=3,
 			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & !Vaihdettu ) ,
-			aes( x=AsennusVuosi, y = Pime‰tTunnit, group=Tyyppi, color = Tyyppi ),
+			aes( x=AsennusVuosi, y = Pime√§tTunnit, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
 			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & Vaihdettu ) ,
-			aes( x=AsennusVuosi, y = Pime‰tTunnit, group=Tyyppi, color = Tyyppi ),
+			aes( x=AsennusVuosi, y = Pime√§tTunnit, group=Tyyppi, color = Tyyppi ),
 			size=3,
 			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & !Vaihdettu ) ,
-			aes( x=AsennusVuosi, y = Pime‰tTunnit, group=Tyyppi, color = Tyyppi ),
+			aes( x=AsennusVuosi, y = Pime√§tTunnit, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
 			alpha=0.5
 		) +
 		geom_smooth(
 			data = data.plot$replacements %>% filter( Vaihdettu ) ,
-			aes( x=as.numeric( AsennusVuosi ), y=Pime‰tTunnit ),
+			aes( x=as.numeric( AsennusVuosi ), y=Pime√§tTunnit ),
 			se = F,
 			method="loess",
 			span = 0.75,

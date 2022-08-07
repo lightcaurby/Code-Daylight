@@ -17,15 +17,15 @@ run <- function( input, models, ... )
 
 	# Extreme outliers?
 	d <- input$replacements %>%
-		dplyr::filter( Vaihdettu & Er‰ %in% input$batches.multi$Er‰ ) %>%
-		group_by( Er‰ ) %>%
-		identify_outliers( Pime‰tTunnit ) %>%
-		select( Er‰, Huoneisto, Pvm, PvmSeur, Pime‰tTunnit, is.outlier, is.extreme )
+		dplyr::filter( Vaihdettu & Er√§ %in% input$batches.multi$Er√§ ) %>%
+		group_by( Er√§ ) %>%
+		identify_outliers( Pime√§tTunnit ) %>%
+		select( Er√§, Huoneisto, Pvm, PvmSeur, Pime√§tTunnit, is.outlier, is.extreme )
 
 	# Construct the table object
 	df <- d %>%
 		mutate(
-			Pime‰tTunnit = lib.models.common$helpers$my.decimal.format( ., Pime‰tTunnit, 2 ),
+			Pime√§tTunnit = lib.models.common$helpers$my.decimal.format( ., Pime√§tTunnit, 2 ),
 			reject = is.extreme
 		)
 	t <- lib.models.common$helpers$my.ggtexttable.wrapper( df, "Reject extreme outliers?", 8 )

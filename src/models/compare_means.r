@@ -55,8 +55,8 @@ run.compare.means.prepare.anova <- function( input, models, ... )
 {
 	# Anova test to compare the means.
 	t <- input$replacements %>%
-		dplyr::filter( Vaihdettu & Er‰ %in% input$batches.multi$Er‰ ) %>%
-		aov( Pime‰tTunnit ~ Er‰, data = . ) 
+		dplyr::filter( Vaihdettu & Er√§ %in% input$batches.multi$Er√§ ) %>%
+		aov( Pime√§tTunnit ~ Er√§, data = . ) 
 	
 	
 	# Construct the result.
@@ -138,8 +138,8 @@ run.compare.means.kruskal.wallis <- function( input, models, ... )
 {
 	# Kruskal-Wallis test to compare the means.
 	d <- input$replacements %>%
-		dplyr::filter( Vaihdettu & Er‰ %in% input$batches.multi$Er‰ ) %>%
-		kruskal.test( Pime‰tTunnit ~ Er‰, data = . ) %>%
+		dplyr::filter( Vaihdettu & Er√§ %in% input$batches.multi$Er√§ ) %>%
+		kruskal.test( Pime√§tTunnit ~ Er√§, data = . ) %>%
 		tidy()
 	
 	# Construct the result.

@@ -17,7 +17,7 @@ run <- function( data.plot, ... )
 		ylab("Duration (hours)") + 
 		xlab("Installation year") +
 		geom_boxplot(
-			aes( x=AsennusVuosi, y = PimeätTunnit ),
+			aes( x=AsennusVuosi, y = PimeÃ¤tTunnit ),
 			alpha=0.65,
 			fill = "orange",
 			color = "darkorange",

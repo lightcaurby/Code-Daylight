@@ -18,26 +18,26 @@ run <- function( data.plot, ... )
 		xlab("Batch") +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & Vaihdettu) ,
-			aes( x=Er‰, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
+			aes( x=Er√§, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
 			size=3,
 			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi == "pienloiste" & !Vaihdettu ) ,
-			aes( x=Er‰, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
+			aes( x=Er√§, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
 			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & Vaihdettu ) ,
-			aes( x=Er‰, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
+			aes( x=Er√§, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
 			size=3,
 			alpha=0.5
 		) +
 		geom_point(
 			data = data.plot$replacements %>% filter( Tyyppi != "pienloiste" & !Vaihdettu ) ,
-			aes( x=Er‰, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
+			aes( x=Er√§, y = VuosiEro, group=Tyyppi, color = Tyyppi ),
 			shape="circle open",
 			size=5,
 			alpha=0.5

@@ -13,7 +13,7 @@ run <- function( data.plot, ... )
 	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Plot.
-	ggplot( data=data.plot$replacements %>% filter(Vaihdettu & Er‰ %in% data.plot$batches.multi$Er‰)  ) +
+	ggplot( data=data.plot$replacements %>% filter(Vaihdettu & Er√§ %in% data.plot$batches.multi$Er√§)  ) +
 		theme_bw() +
 		theme(
 			panel.border = element_blank(),
@@ -24,7 +24,7 @@ run <- function( data.plot, ... )
 			plot.title = element_text( vjust = 1, margin = margin(b = 0, unit="line"))
 		) +
 		geom_density_ridges(
-			aes( x=Pime‰tTunnit, y=Er‰ ),
+			aes( x=Pime√§tTunnit, y=Er√§ ),
 			fill="skyblue3",
 			color="skyblue4",
 			#bandwidth = 1000,
@@ -40,8 +40,8 @@ run <- function( data.plot, ... )
 		) +
 		scale_x_continuous(expand=c(0.01,0), 
 											 limits=c(
-											 	min(data.plot$replacements$Pime‰tTunnit),
-											 	max(data.plot$replacements$Pime‰tTunnit)
+											 	min(data.plot$replacements$Pime√§tTunnit),
+											 	max(data.plot$replacements$Pime√§tTunnit)
 											 )) +
 		scale_y_discrete(expand = c(0.025, 0))+
 		ylab( "" ) +
