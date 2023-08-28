@@ -13,6 +13,7 @@ run <- function( data.plots, height, width, ... )
 
 	# Target directory.
 	targetDir <- "output/plots/"
+	dir.create( targetDir, recursive=TRUE )
 	cat( sprintf( "\tGenerating files to '%s'\n", here::here( targetDir ) ) )
 	
 	# Output all plots.

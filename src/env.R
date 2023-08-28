@@ -10,10 +10,10 @@ EnsurePackage<-function(x)
 }
 
 # Checkpoint.
-EnsurePackage( "checkpoint" )
+#EnsurePackage( "checkpoint" )
 #checkpoint( "2020-11-30" )
 #checkpoint( "2021-07-25" )
-checkpoint( "2022-06-15" )
+#checkpoint( "2022-06-15" )
 
 
 # Packages.

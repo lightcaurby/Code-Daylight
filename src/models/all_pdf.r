@@ -18,11 +18,13 @@ run <- function( data.models, ... )
 	
 	# Output all plots.
 	targetDir <- "output/plots/"
+	dir.create( targetDir, recursive=TRUE )
 	cat( sprintf( "\tGenerating files to '%s'\n", here::here( targetDir ) ) )
 	OutputPDF( data.models, "plot", targetDir, myopts )
 
 	# Output all tables.
 	targetDir <- "output/tables/"
+	dir.create( targetDir, recursive=TRUE )
 	cat( sprintf( "\tGenerating files to '%s'\n", here::here( targetDir ) ) )
 	OutputPDF( data.models, "table", targetDir, myopts )
 
