@@ -32,11 +32,11 @@ eräkuva <- function( result2, seed, eräid2, led.loc2, ci.limit )
 		
 		w.all <- result$replacements %>% filter( EräID == eräid )
 		w <- w.all %>% filter( Vaihdettu )
-		if( nrow(w) > 1 )
-		{
-			smpl <- w$PimeätTunnit
-		}
-		else
+		#if( nrow(w) > 1 )
+		#{
+		#	smpl <- w$PimeätTunnit
+		#}
+		#else
 		{
 			smpl <- rlogis( sample.size, location=led.loc, scale=led.sca )
 		}
@@ -208,11 +208,11 @@ v <- result$replacements %>%
 
 v
 
-my_date_format <- function (format.major = "%m\n\n%Y", format.minor = "%m\n\n", tz = "UTC") 
+my_date_format <- function (kk, format.major = "%m\n\n%Y", format.minor = "%m\n\n", tz = "UTC") 
 {
 	function(x)
 	{ 
-		ifelse( is.na(x), "", ifelse( month(x) == 7, format( x, format.major, tz=tz ), format( x, format.minor, tz=tz ) ) )
+		ifelse( is.na(x), "", ifelse( month(x) == kk, format( x, format.major, tz=tz ), format( x, format.minor, tz=tz ) ) )
 	}
 }
 
@@ -249,8 +249,8 @@ p <- ggplot(
 	geom_point( aes(x=Pvm.max.2, y=Huoneisto ), size=3, color="coral3" ) + 
 	scale_x_date(
 		name = element_blank(),
-		labels = my_date_format(),
-		date_breaks = "1 month",
+		labels = my_date_format(6),
+		date_breaks = "2 month",
 		limits = c(Pvm.today-15, max(v$Pvm.max)+15), 
 		expand = c(0, 0)) + 
 	scale_y_discrete(
@@ -269,7 +269,7 @@ p <- ggplot(
 				 axis.text.y = element_text(size=12, ),
 				 axis.title.x = element_text(size=14, margin = margin(t = 10, r = 0, b = 0, l = 0) ),
 				 axis.title.y = element_text(size=14, angle = 90, margin = margin(t = 0, r = 10, b = 0, l = 0)))
-
+p
 name <- "expected_failures_current"
 targetDir <- "output/plots/"
 fnBase <- paste0( "plot_", name, ".pdf" )
