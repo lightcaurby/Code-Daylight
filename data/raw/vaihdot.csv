@@ -90,7 +90,7 @@ C16,2010-10-09,pienloiste,1,
 C16,2012-08-01,pienloiste,3,
 C16,2015-10-31,pienloiste,5,
 C16,2019-12-09,led,8,
-C16,2023-08-12,led,11,5W
+C16,2023-08-12,led,12,6W
 #
 C17,2012-11-18,pienloiste,3,
 C17,2014-10-19,pienloiste,4,
@@ -102,6 +102,7 @@ C18,2011-12-03,pienloiste,1,
 C18,2015-11-22,pienloiste,5,
 C18,2018-01-13,pienloiste,7,
 C18,2019-12-18,led,10,
+C18,2023-11-13,led,12,6W
 #
 C19,2012-08-01,pienloiste,3,
 C19,2015-12-31,pienloiste,5,

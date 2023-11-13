@@ -14,7 +14,7 @@ options( "lightcaurby.Code-Daylight" = list(
 lib.workflows <- suppressPackageStartupMessages( modules::use( here::here("src/workflows") ) )
 result <- lib.workflows$full$run()
 
-
+print(result$replacements %>% arrange( Pvm ), n=200)
 eräkuva <- function( result2, seed, eräid2, led.loc2, ci.limit )
 {
 		set.seed( seed )
