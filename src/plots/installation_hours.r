@@ -63,6 +63,6 @@ run <- function( data.plot, ... )
 					 axis.ticks=element_blank(),
 					 plot.margin = unit(c(1,1,0.5,1), "cm"),
 					 axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0) ),
-					 axis.title.y = element_text(margin = margin(t = 0, r = 10, b = 0, l = 0)))
+					 axis.title.y = element_text(angle=-90, margin = margin(t = 0, r = 10, b = 0, l = 0)))
 	
 }

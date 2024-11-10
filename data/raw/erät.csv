@@ -1,13 +1,13 @@
-Erä,Aika,Selite,Mtbf
-1,2008-10,"20 kpl pienloiste 10000h?",10000
-2,2011-04,"10 kpl pienloiste 15000h?",15000
-3,2012-08,"10 kpl pienloiste 12000h?",12000
-4,2013-09,"10 kpl pienloiste 15000h?",15000
-5,2014-12,"10 kpl pienloiste 12000h?",12000
-6,2015-09,"testi led 5.5W 10000h?",10000
-7,2016-01,"10 kpl pienloiste 8000h?",8000
-8,2017-12,"12 kpl led 6W 8000h?",8000
-9,2018-09,"HHKP 8.5W led",10000
-10,2019-12,"11 kpl led 5.5W 12000h",12000
-11,2021-02,"12 kpl led 5W 15000h",15000
-12,2023-03,"8 kpl led 6W 20000h",20000
+Erä,Aika,Selite,Mtbf,SDPercent
+1,2008-10,"20 kpl pienloiste 10000h?",10000,25
+2,2011-04,"10 kpl pienloiste 15000h?",15000,25
+3,2012-08,"10 kpl pienloiste 12000h?",12000,25
+4,2013-09,"10 kpl pienloiste 15000h?",15000,25
+5,2014-12,"10 kpl pienloiste 12000h?",12000,25
+6,2015-09,"testi led 5.5W 10000h?",10000,20
+7,2016-01,"10 kpl pienloiste 8000h?",8000,25
+8,2017-12,"12 kpl led 6W 8000h?",10000,20
+9,2018-09,"2 kpl HHKP 8.5W led",12000,20
+10,2019-12,"11 kpl led 5.5W 12000h",15000,20
+11,2021-02,"12 kpl led 5W 15000h",15000,20
+12,2023-03,"8 kpl led 6W 20000h",20000,20
