@@ -14,123 +14,6 @@ options( "lightcaurby.Code-Daylight" = list(
 lib.workflows <- suppressPackageStartupMessages( modules::use( here::here("src/workflows") ) )
 result <- lib.workflows$full$run()
 
-batch.lifetimes.predictions.transform <- function( batch, replacements, seed, .pi.interval, .range.factor )
-{
-		set.seed( seed )
-		
-		er‰id <- as.integer( batch$Er‰ )
-	
-		.led.loc <- batch$Mtbf
-		.led.std.percent <- batch$SDPercent
-		df.params <- data.frame(
-			Er‰ID = er‰id,
-			led.loc = .led.loc,
-			led.std.percent = .led.std.percent,
-			led.sca = .led.loc * ( .led.std.percent / 100 ),
-			led.max = 35000,
-			pi.interval = .pi.interval,
-			range.factor = .range.factor
-		)
-		
-		er‰t <- replacements %>% filter( Vaihdettu == F ) %>% distinct( Er‰ID )
-		v <- replacements %>% filter( Vaihdettu == F ) %>% filter( Er‰ID == er‰id )
-		
-		w.all <- replacements %>% filter( Er‰ID == er‰id )
-		w <- w.all %>% filter( Vaihdettu )
-		
-		df.fit <- NULL
-		if( nrow(w) > 0 )
-		{
-			df.fit <- data.frame(
-					Er‰ID = er‰id,
-					time = w$Pime‰tTunnit,
-					status = ( 1- plogis( w$Pime‰tTunnit, location=df.params$led.loc, scale=df.params$led.sca ) ) * df.params$led.max )
-		}
-		
-		df.pi <- generate_data_for_pi(
-				.mean = df.params$led.loc,
-				.pi.interval = df.params$pi.interval,
-				.sd.percentage = df.params$led.std.percent,
-				.range.factor = df.params$range.factor );
-		df.pi$mean.obs <- NA
-		if( nrow(w) > 0 )
-		{
-			df.pi$mean.obs <- mean( w$Pime‰tTunnit )
-		}
-
-		df2.segment <- data.frame(
-			Er‰ID = er‰id,
-			x = if_else( is.na( df.pi$mean.obs ), df.pi$mean, df.pi$mean.obs ),
-			xend = if_else( is.na( df.pi$mean.obs ), df.pi$mean, df.pi$mean.obs ),
-			y = 0,
-			yend = df.params$led.max )
-
-		df2.rect <- data.frame(
-			Er‰ID = er‰id,
-			xmin = df.pi$lpl,
-			xmax = df.pi$upl,
-			ymin = 0,
-			ymax = df.params$led.max )
-
-		list(
-			Er‰ID = er‰id,
-			df = data.frame(
-				Er‰ID=er‰id,
-				Hours.min=df2.rect$xmin, 
-				Hours=round(df2.segment$x, 0), 
-				Hours.max=df2.rect$xmax
-			),
-			df.nrow = data.frame(
-				w.all = nrow( w.all ),
-				w = nrow( w )
-			),
-			df.batch = batch,
-			df.params = df.params,
-			df.pi.segment = df2.segment,
-			df.pi.rect = df2.rect,
-			df.fit = df.fit
-		)
-}
-
-generate_data_for_pi <- function( .n = 1e6, .mean, .pi.interval = 0.95, .sd.percentage = 15, .range.factor = 8 )
-{
-	.sd <- ( .sd.percentage / 100 ) * .mean
-	.range <- .range.factor * .sd
-	df.pi.gen <- data.frame(
-		x =   round( .mean - (.range / 2 ) + ( runif( .n ) * .range ), 0 ),
-		p =   runif( .n ) ) %>%
-		mutate( p.limit.orig = pnorm( x, mean = .mean, sd = .sd ) ) %>%
-		mutate( p.limit = if_else( p.limit.orig < 0.5, 1 - p.limit.orig, p.limit.orig  ) ) %>% 
-		mutate( b = if_else( p >= p.limit, TRUE, FALSE )
-		)
-	
-	df.pi.gen <- df.pi.gen %>% filter( b  ) %>% arrange( x )
-	lo.index <- ceiling( ( 1 - .pi.interval ) * length( df.pi.gen$x ) )
-	hi.index <- floor( .pi.interval * length( df.pi.gen$x ) )
-	
-	df.pi <- data.frame(
-		mean = .mean,
-		lpl = df.pi.gen$x[ lo.index ],
-		upl = df.pi.gen$x[ hi.index ]
-	);
-	
-	df.pi
-}
-
-generate_predictions <- function( result, .pi.interval, .range.factor )
-{
-	cn <- colnames( result$batches )
-	cn[ 1 ] <- iconv( cn[ 1 ], "UTF-8", "latin1" )
-	predictions <- result$batches %>% 
-		pmap( function( ... ) {
-			df <- tibble( ... )
-			colnames( df ) <- cn
-			batch.lifetimes.predictions.transform( df, result$replacements, 3333, .pi.interval, .range.factor )
-		})
-
-	predictions	
-}
-
 batch.lifetimes.predictions.plot <- function( df.extracted.for.batch )
 {
 	df.nrow <- df.extracted.for.batch %>%
@@ -254,8 +137,7 @@ generate_prediction_plots <- function( result )
 	plots
 }
 
-result$batch_predictions <- generate_predictions( result, 0.90, 8 )
-result$batch_predictions$plots <- generate_prediction_plots( result )
+result$batch_predictions$plots <- generate_prediction_plots( result$data )
 
 name <- "batch_lifetime_predictions"
 targetDir <- "output/plots/"
@@ -273,118 +155,6 @@ result$batch_predictions$plots %>%
 	invisible()
 
 dev.off()
-
-
-expected.failures.transform <- function( result )
-{
-	di <- result$daylight.info$normalyear %>% 
-		select( date, dark.hours, day, month ) %>% 
-		mutate( year = 0 )
-	
-	df.batches <- result$batch_predictions %>%
-		map( function( l ) {
-			as.data.frame( l["df" ] )
-		}) %>% 	bind_rows()
-	colnames( df.batches ) <- c( "Er‰ID", "Hours.min", "Hours", "Hours.max" )
-	
-	expected_failures_initial <- result$replacements %>% 
-		filter( Vaihdettu == F ) %>% 
-		select( Huoneisto, Er‰ID, Er‰, Pvm ) %>% 
-		join( df.batches ) %>%
-		mutate( Day = day(Pvm), Month=month(Pvm), Year=year(Pvm)) %>%
-		mutate( YearMonth = ( Year * 100 ) + Month ) %>%
-		pmap( function( ... ) {
-			df <- tibble( ... )
-			lo <- cumsumThreshold( di, df$Month, df$Day, df$Hours.min )
-			mid <- cumsumThreshold( di, df$Month, df$Day, df$Hours )
-			hi <- cumsumThreshold( di, df$Month, df$Day, df$Hours.max )
-			print( paste0( 
-				df$Er‰ID, 
-				" / ", 
-				as.character(df$Pvm), 
-				": " , 
-				as.character(mid$day), 
-				".", 
-				as.character(mid$month),
-				".", 
-				as.character( mid$year + df$Year)))
-			data.frame( 
-				Er‰ID=df$Er‰ID, 
-				Er‰=df$Er‰, 
-				Pvm.min=make_date(df$Year + lo$year, lo$month, lo$day), 
-				Pvm=make_date(df$Year + mid$year, mid$month, mid$day), 
-				Pvm.max=make_date(df$Year + hi$year, hi$month, hi$day), 
-				Huoneisto=df$Huoneisto )
-		}) %>%
-		bind_rows() %>%
-		arrange( Pvm )
-	
-	today = Sys.Date()
-	Pvm.today = make_date( year = year(today), month=month(today), day=1)
-	YearMonth.today = ( year(Pvm.today) * 100 ) + month(Pvm.today)
-	
-	expected_failures <- 
-		expected_failures_initial %>%
-		mutate( 
-			YearMonth.min = ( year(Pvm.min) * 100 ) + month(Pvm.min),
-			YearMonth = ( year(Pvm) * 100 ) + month(Pvm),
-			YearMonth.max = ( year(Pvm.max) * 100 ) + month(Pvm.max)
-		) %>%
-		mutate( 
-			Huoneisto = fct_reorder( Huoneisto, Pvm ),
-			Pvm.today = Pvm.today,
-			Pvm.min.2x = as_date( if_else( YearMonth.min < YearMonth.today, NA, Pvm.min ) ),
-			Pvm.2x = as_date( if_else( YearMonth < YearMonth.today, NA, Pvm ) ),
-			Pvm.max.2x = as_date( if_else( YearMonth.max <= YearMonth.today, Pvm.today, Pvm.max ) ),
-			Overtime.label = if_else( YearMonth.max < YearMonth.today, 
-															 paste0( 
-																year( Pvm.max ), ".", formatC( month ( Pvm.max ), width = 2, flag = "0" )
-															),
-															 "" ),
-		) %>%
-		mutate( 
-			Pvm.min.2 = make_date( year=year(Pvm.min.2x), month=month(Pvm.min.2x), day = 1),
-			Pvm.2 = make_date( year=year(Pvm.2x), month=month(Pvm.2x), day = 1),
-			Pvm.max.2 = make_date( year=year(Pvm.max.2x), month=month(Pvm.max.2x), day = 1),
-			Pvm.min.3 = if_else( is.na( Pvm.min.2 ), Pvm.today, Pvm.min.2 ),
-			Pvm.3 = if_else( is.na( Pvm.2 ), Pvm.today, Pvm.2 )
-		)
-
-	expected_failures		
-}
-
-cumsumThreshold <- function( di, m, d, thold )
-{
-	y = 0
-	cont <- TRUE
-	while( cont )
-	{
-		if( y == 0 )
-		{
-			di.use <- di[ di$month > m | ( di$month == m & di$day > d ), ] 
-		} 
-		else
-		{
-			di.use <- di
-		}
-		
-		satisfied <- which( cumsum( di.use$dark.hours ) >= thold )
-		if( length( satisfied ) > 0 )
-		{
-			ind <- satisfied[ 1 ]
-			res <- di.use[ ind, ] %>% select( day, month, year ) %>% mutate( year = year + y )
-			cont <- FALSE
-		}
-		else
-		{
-			thold <- thold - sum( di.use$dark.hours )
-			y <- y + 1
-		}
-	}
-	res
-}
-
-
 
 #expected.plot
 
@@ -455,8 +225,7 @@ expected.failures.plot <- function( result )
 }
 
 
-result$expected_failures <- expected.failures.transform( result )
-result$expected_failures_plot <- expected.failures.plot( result )
+result$expected_failures_plot <- expected.failures.plot( result$data )
 
 
 name <- "expected_failures_current"
@@ -471,3 +240,8 @@ dev.off()
 
 #CairoWin()
 
+l <- list( a = c(1,2,3), b=c(4,5,6))
+l1 <- l
+l2 <- list( b = c(7,8,9), c=c(10,11,12))
+
+modifyList( l1, l2 )

@@ -2,11 +2,14 @@ import( "here" )
 import( "modules" )
 import( "readr" )
 
-export( "read" )
+export( "run" )
 
 # Read daylight info.
-read <- function( ... )
+run <- function( ... )
 {
+	# Status information.
+	cat( sprintf( "\tdaylight info\n" ) )
+
 	# Read the tabular data.
 	read_fwf(
 		file = here::here( "data/raw/tampere.txt" ),   

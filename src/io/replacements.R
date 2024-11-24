@@ -2,11 +2,14 @@ import( "here" )
 import( "modules" )
 import( "readr" )
 
-export( "read" )
+export( "run" )
 
 # Read lamp replacement data.
-read <- function( ... )
+run <- function( ... )
 {
+	# Status information.
+	cat( sprintf( "\treplacements\n" ) )
+
 	# Read the CSV data.
 	read_csv( here::here( "data/raw/vaihdot.csv" ), col_types ="fDffc", comment="#" )
 }

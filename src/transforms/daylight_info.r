@@ -11,8 +11,11 @@ run <- function( input, ... )
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
+	# Status information.
+	cat( sprintf( "\tdaylight info\n" ) )
+	
 		# Calculate daylight seconds.
-	input <- input %>%
+	input <- input$daylight_info %>%
 		select( -location ) %>%
 		mutate( daylight.seconds = as.numeric( time2 - time1 ) )
 
@@ -56,7 +59,8 @@ run <- function( input, ... )
 	output.normalyear <- output %>% filter( date != as.Date("2004-02-29") )
 
 	# Return value.
-	output = list( leapyear = output.leapyear, normalyear = output.normalyear)
+	output <- list( daylight_info = list( leapyear = output.leapyear, normalyear = output.normalyear) )
+	output
 }
 
 
