@@ -11,8 +11,11 @@ run <- function( data.plot, ... )
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
+	# Status information.
+	cat( sprintf( "\tbatch hours\n" ) )
+	
 	# Plot.
-	ggplot( data=data.plot$replacements ) +
+	p <- ggplot( data=data.plot$replacements ) +
 		theme_bw() +
 		ylab("Duration (hours)") + 
 		xlab("Batch") +
@@ -65,6 +68,11 @@ run <- function( data.plot, ... )
 					 axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0) ),
 					 axis.title.y = element_text(angle=-90, margin = margin(t = 0, r = 10, b = 0, l = 0)))
 	
+	list(
+		.height = 4,
+		.width = 8,
+		plots = list( p )
+	)
 
 }
 

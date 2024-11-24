@@ -1,26 +1,28 @@
 import( "here" )
 import( "modules" )
+import( "dplyr" )
+import( "purrr" )
 import( "ggplot2" )
 import( "grDevices" )
 
 export( "run" )
 
 # Create a PDF for each plot.
-run <- function( data.plots, height, width, ... )
+run <- function( data.plots, ... )
 {
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
 	# Target directory.
 	targetDir <- "output/plots/"
-	dir.create( targetDir, recursive=TRUE )
+	dir.create( targetDir, recursive=TRUE, showWarnings=FALSE )
 	cat( sprintf( "\tGenerating files to '%s'\n", here::here( targetDir ) ) )
 	
 	# Output all plots.
-	invisible( lapply(data.plots$grobs, function( p ) {
+	invisible( lapply(data.plots$grob_list, function( g ) {
 		
 		# Output this plot.
-		fnBase <- paste0( "plot_", p$name, ".pdf" )
+		fnBase <- paste0( "plot_", g$name, ".pdf" )
 		fn <- paste0( targetDir, fnBase )
 		fn <- here::here( fn )
 		
@@ -34,8 +36,15 @@ run <- function( data.plots, height, width, ... )
 		{
 			# Generate PDF.
 			cat( sprintf( "\n" ) )
-			pdf( file = fn, height=height, width=width)
-				print( p$plot )
+			pdf( file = fn, height=g$plot_list$.height, width=g$plot_list$.width)
+			
+			g$plot_list$plots %>%
+				map( function( p ) {
+					print( p )
+					NULL
+				} ) %>%
+				invisible()
+			
 			dev.off()
 		}
 		else

@@ -49,7 +49,7 @@ run <- function( ... )
 	
 	# Output plots as PDFs.
 	cat( sprintf( "Generating an output file for each plot\n" ) )
-	lib.plots$all_pdf$run( result$plots, 4, 8 )
+	lib.plots$all_pdf$run( result$plots )
 
 	# Run the modeling.
 	cat( sprintf( "Running the models\n" ) )

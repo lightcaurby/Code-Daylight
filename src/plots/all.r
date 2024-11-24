@@ -72,21 +72,23 @@ runImpl <- function( input, ... )
 		"location_days",
 		"location_hours",
 		"location_years",
-		"density_batch_hours"
+		"density_batch_hours",
+		"batch_predictions",
+		"expected_failures"
 	)
 	
 	# Generate plots.
-	plots <- lapply( plot_src, function( p ) {
+	plot_list <- lapply( plot_src, function( p ) {
 		list( 
 			name = p,
-			plot = lib.plots[[  p ]]$run( input )
+			plot_list = lib.plots[[ p ]]$run( input )
 		)
 	} )
-	names( plots ) <- plot_src
+	names( plot_list ) <- plot_src
 	
 	# Construct result.
 	result <- list(
-		grobs = plots,
+		grob_list = plot_list,
 		actualRun = NA
 	)
 	

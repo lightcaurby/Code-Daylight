@@ -12,8 +12,11 @@ run <- function( data.plot, ... )
 	# Debugger hook.
 	suppressPackageStartupMessages( modules::use( here::here( "src/utils" ) ) )$debug$run( run )
 
+	# Status information.
+	cat( sprintf( "\tbatch hours density\n" ) )
+	
 	# Plot.
-	ggplot( data=data.plot$replacements %>% filter(Vaihdettu & Erä %in% data.plot$batches.multi$Erä)  ) +
+	p <- ggplot( data=data.plot$replacements %>% filter(Vaihdettu & Erä %in% data.plot$batches.multi$Erä)  ) +
 		theme_bw() +
 		theme(
 			panel.border = element_blank(),
@@ -49,5 +52,9 @@ run <- function( data.plot, ... )
 		labs(title="",
 				 subtitle="")
 	
-	
+	list(
+		.height = 4,
+		.width = 8,
+		plots = list( p )
+	)
 }
