@@ -100,10 +100,17 @@ batch.lifetimes.predictions.plot <- function( df.extracted.for.batch )
 		geom_segment( data=df.pi.segment, aes(x = x, xend=xend, y = y, yend=yend), inherit.aes = F, color="orange", linewidth=1.5, alpha=0.5 ) +
 		geom_rect( data=df.pi.rect, aes(xmin = xmin, xmax = xmax, ymin=ymin, ymax = ymax ), inherit.aes = F, color=NA, fill="orange", alpha=0.2 )
 	
-	if( df.nrow$w > 0 )
+	if( df.nrow$w.all > 0 )
 	{
 		p <- p + 
-			geom_point( data=df.fit, aes(x = time, y = status), color="coral3", alpha=0.75, size=6 )
+			geom_point( data=df.fit %>% filter( status == TRUE ), aes(x = time, y = sigma, group=tyyppi, color = tyyppi), alpha=0.75, size=6 )
+		p <- p + 
+			geom_point( data=df.fit %>% filter( status == FALSE ), aes(x = time, y = sigma, group=tyyppi, color = tyyppi), alpha=0.75, size=9, shape="circle open" )
+		
+		p <- p +
+			scale_fill_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led"), labels = c("fluorescent", "led")) +
+			scale_color_manual(values = c("pienloiste"="#FC4E07", "led"="#00AFBB"), breaks = c("pienloiste", "led"), labels = c("fluorescent", "led")) +
+			theme(legend.position = "none")
 	}
 	
 	p <- p +

@@ -69,12 +69,14 @@ batch_lifetimes_predictions <- function(
 	w <- w.all %>% filter( Vaihdettu )
 	
 	df.fit <- NULL
-	if( nrow(w) > 0 )
+	if( nrow(w.all) > 0 )
 	{
 		df.fit <- data.frame(
 			EräID = eräid,
-			time = w$PimeätTunnit,
-			status = ( 1- plogis( w$PimeätTunnit, location=df.params$led.loc, scale=df.params$led.sca ) ) * df.params$led.max )
+			time = w.all$PimeätTunnit,
+			sigma = ( 1- plogis( w.all$PimeätTunnit, location=df.params$led.loc, scale=df.params$led.sca ) ) * df.params$led.max ,
+			tyyppi = w.all$Tyyppi,
+		  status = w.all$Vaihdettu )
 	}
 	
 	df.pi <- generate_data_for_pi(
