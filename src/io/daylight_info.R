@@ -11,6 +11,27 @@ run <- function( ... )
 	cat( sprintf( "\tdaylight info\n" ) )
 
 	# Read the tabular data.
+	read_table(
+		file = here::here( "data/raw/tampere2.txt" ),   
+		col_types = cols(
+			leapyear = col_logical(),
+			dst = col_logical(),
+			day = col_integer(),
+			month = col_integer(),
+			sunrise = col_time(),
+			sundown = col_time(),
+			dusk = col_time()
+		)
+	)
+}
+
+# Read daylight info.
+run.old <- function( ... )
+{
+	# Status information.
+	cat( sprintf( "\tdaylight info\n" ) )
+	
+	# Read the tabular data.
 	read_fwf(
 		file = here::here( "data/raw/tampere.txt" ),   
 		col_types = cols(

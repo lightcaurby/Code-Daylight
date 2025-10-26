@@ -57,7 +57,7 @@ batch_lifetimes_predictions <- function(
 		led.loc = .led.loc,
 		led.std.percent = .led.std.percent,
 		led.sca = .led.loc * ( .led.std.percent / 100 ),
-		led.max = 35000,
+		led.max = 30000,
 		pi.interval = .pi.interval,
 		range.factor = .range.factor
 	)
@@ -74,7 +74,7 @@ batch_lifetimes_predictions <- function(
 		df.fit <- data.frame(
 			EräID = eräid,
 			time = w.all$PimeätTunnit,
-			sigma = ( 1- plogis( w.all$PimeätTunnit, location=df.params$led.loc, scale=df.params$led.sca ) ) * df.params$led.max ,
+			sigma = plogis( w.all$PimeätTunnit, location=df.params$led.loc, scale=df.params$led.sca ) * df.params$led.max,
 			tyyppi = w.all$Tyyppi,
 		  status = w.all$Vaihdettu )
 	}

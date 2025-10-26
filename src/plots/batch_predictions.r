@@ -68,8 +68,10 @@ batch.lifetimes.predictions.plot <- function( df.extracted.for.batch )
 	df.fit <- df.extracted.for.batch %>%
 		extract2( "df.fit" )
 	
-	xs <- sort( round( rlogis( df.params$led.max, location=df.params$led.loc, scale=df.params$led.sca ), 0), decreasing=T )
-	df.log <- data.frame( y=seq(0, df.params$led.max, length.out = df.params$led.max),	x=xs )
+	#xs <- sort( round( rlogis( df.params$led.max, location=df.params$led.loc, scale=df.params$led.sca ), 0), decreasing=T )
+	samples <- seq(0, df.params$led.max, length.out = df.params$led.max)
+	ys <- plogis( samples, location=df.params$led.loc, scale=df.params$led.sca ) * df.params$led.max
+	df.log <- data.frame( x=samples,	y=ys )
 	
 	y.breaks = c( 0, 0.1, seq( 0.25, 0.75, by=0.25 ), 0.9, 1.0) * df.params$led.max
 	y.labels = format( sort( y.breaks / df.params$led.max, decreasing=F), nsmall=2, small.mark=",") 
@@ -100,7 +102,7 @@ batch.lifetimes.predictions.plot <- function( df.extracted.for.batch )
 		geom_segment( data=df.pi.segment, aes(x = x, xend=xend, y = y, yend=yend), inherit.aes = F, color="orange", linewidth=1.5, alpha=0.5 ) +
 		geom_rect( data=df.pi.rect, aes(xmin = xmin, xmax = xmax, ymin=ymin, ymax = ymax ), inherit.aes = F, color=NA, fill="orange", alpha=0.2 )
 	
-	if( df.nrow$w.all > 0 )
+	if( df.nrow$w.all )
 	{
 		p <- p + 
 			geom_point( data=df.fit %>% filter( status == TRUE ), aes(x = time, y = sigma, group=tyyppi, color = tyyppi), alpha=0.75, size=6 )
@@ -114,23 +116,23 @@ batch.lifetimes.predictions.plot <- function( df.extracted.for.batch )
 	}
 	
 	p <- p +
-		annotate( "text", x = df.pi.rect$xmax, y = df.params$led.max-500, hjust=0, vjust=-2.2, angle = -90,, size = 3,
+		annotate( "text", x = df.pi.rect$xmin, y = df.params$led.max-500, hjust=0, vjust=1.4, angle = -90,, size = 3,
 							label=paste0("expected failure point: ", as.character( df.params$led.loc), " h"),
 							parse=F, color = "darkorange" ) +
-		annotate( "text", x = df.pi.rect$xmax, y = df.params$led.max-500, hjust=0, vjust=-0.7, angle = -90, size = 3,
+		annotate( "text", x = df.pi.rect$xmin, y = df.params$led.max-500, hjust=0, vjust=2.9, angle = -90, size = 3,
 							label=paste0("assumed standard deviation: ", as.character( df.params$led.std.percent ), "%"),
 							parse=F, color = "darkorange" ) +
-		annotate( "text", x = df.pi.rect$xmax, y = df.params$led.max-500, hjust=0, vjust=1.3, angle = -90,
+		annotate( "text", x = df.pi.rect$xmin, y = df.params$led.max-500, hjust=0, vjust=-0.4, angle = -90,
 							label=paste0( as.character( df.params$pi.interval * 100 ), "% PI: ", lower, "...", upper),
 							parse=F, color = "darkorange" )
 	
 	if( df.nrow$w > 0 )
 	{
 		p <- p +
-			annotate( "text", x = df.pi.segment$x, y = 500, hjust=1.05, vjust=3.4, angle = -90, size = 3,
+			annotate( "text", x = df.pi.segment$x, y = df.params$led.max * 0.2, hjust=0, vjust=1.7, angle = -90, size = 3,
 								label=paste0( "n = ", as.character( df.nrow$w ), " / ", as.character( df.nrow$w.all ) ),
 								parse=F, color = "darkorange" ) +
-			annotate( "text", x = df.pi.segment$x, y = 500, hjust=1, vjust=1.4, angle = -90, fontface="bold",
+			annotate( "text", x = df.pi.segment$x, y = df.params$led.max * 0.2, hjust=0, vjust=-0.3, angle = -90, fontface="bold",
 								label=paste0( "bold(\"\u03bc = ", as.character( round( df.pi.segment$x, 0 ) ), "\")" ),
 								parse=T, color = "darkorange" )
 	}
@@ -142,9 +144,10 @@ batch.lifetimes.predictions.plot <- function( df.extracted.for.batch )
 			labels= x.labels,
 			limits = c(0, df.params$led.max)) + 
 		scale_y_continuous(
-			name = "Probability of lifetime",
+			name = "Cumulative probability of failure",
 			breaks= y.breaks,
-			labels= y.labels) +
+			labels= y.labels,
+			limits = c(0, df.params$led.max)) +
 		labs(
 			title = paste0( "Lifetime prediction for batch #", df.batch$Erä, ": ", df.batch$Aika ) )
 	

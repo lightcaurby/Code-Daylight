@@ -19,7 +19,7 @@ run <- function( input, ... )
 	cat( sprintf( "\texpected failures\n" ) )
 	
 	di <- input$daylight_info$normalyear %>% 
-		select( date, dark.hours, day, month ) %>% 
+		select( dark.hours, day, month ) %>% 
 		mutate( year = 0 )
 	
 	df.batches <- input$batch_predictions %>%
